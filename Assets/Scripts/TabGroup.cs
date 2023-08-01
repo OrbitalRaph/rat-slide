@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MenuScripts
 {
     public class TabGroup : MonoBehaviour
     {
         public List<TabButton> tabButtons;
-        public Color tabIdle;
-        public Color tabHover;
-        public Color tabActive;
+        public Sprite tabIdle;
+        public Sprite tabActive;
         public TabButton selectedTab;
         public PanelGroup panelGroup;
 
@@ -23,22 +23,9 @@ namespace MenuScripts
             tabButtons.Add(button);
         }
 
-        public void OnTabEnter(TabButton button)
-        {
-            ResetTabs();
-            if (selectedTab == null || button != selectedTab) 
-            {
-                button.image.color = tabHover;    
-            }
-        }
-
-        public void OnTabExit(TabButton button)
-        {
-            ResetTabs();
-        }
-
         public void OnTabSelected(TabButton button)
         {
+            if (panelGroup.isChanging) { return; }
             if (selectedTab != null)
             {
                 selectedTab.Deselect();
@@ -47,7 +34,7 @@ namespace MenuScripts
             selectedTab.Select();
 
             ResetTabs();
-            button.image.color = tabActive;
+            button.image.sprite = tabActive;
             
             if (panelGroup != null)
             {
@@ -60,7 +47,7 @@ namespace MenuScripts
             foreach (TabButton button in tabButtons)
             {
                 if (button == selectedTab) { continue; }
-                button.image.color = tabIdle;
+                button.image.sprite = tabIdle;
             }
         }
     }

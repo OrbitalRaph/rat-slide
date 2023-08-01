@@ -8,7 +8,7 @@ using UnityEngine.Events;
 namespace MenuScripts
 {
     [RequireComponent(typeof(Image))]
-    public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+    public class TabButton : MonoBehaviour, IPointerClickHandler
     {
         public TabGroup tabGroup;
         public Image image;
@@ -25,16 +25,6 @@ namespace MenuScripts
         public void OnPointerClick(PointerEventData eventData)
         {
             tabGroup.OnTabSelected(this);
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            tabGroup.OnTabEnter(this);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            tabGroup.OnTabExit(this);
         }
 
         public void Select()
