@@ -37,6 +37,7 @@ public class CameraNavigation : MonoBehaviour
         {
             float speed = 5f; // Adjuste la vitesse de la caméra
             transform.position = Vector3.Lerp(transform.position, currentTarget.position, Time.deltaTime * speed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, currentTarget.rotation, Time.deltaTime * speed);
         }
     }
 }

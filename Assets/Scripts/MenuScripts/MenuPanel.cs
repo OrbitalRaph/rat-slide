@@ -7,7 +7,9 @@ namespace MenuScripts
     [RequireComponent(typeof(CanvasGroup))]
     public class MenuPanel : MonoBehaviour
     {   
-        public void ShowMenu(bool fromRight = false)
+        public bool fromRight = false;
+
+        public void ShowMenu()
         {
             if (fromRight)
             {
@@ -21,9 +23,9 @@ namespace MenuScripts
             LeanTween.alphaCanvas(GetComponent<CanvasGroup>(), 1, 0.5f).setEaseOutCubic();
         }
 
-        public void HideMenu(bool toRight = false)
+        public void HideMenu()
         {
-            if (toRight)
+            if (fromRight)
             { 
                 LeanTween.moveLocalX(gameObject, 1000, 0.5f).setEaseOutCubic();
             }

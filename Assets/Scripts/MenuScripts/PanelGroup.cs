@@ -26,13 +26,13 @@ public class PanelGroup : MonoBehaviour
         private IEnumerator ChangeMenuPanel()
         {
             isChanging = true;
-            bool toRight = false;
+            // bool toRight = false;
             for (int i = 0; i < panels.Count; i++)
             {
                 if (panels[i].gameObject.activeSelf)
                 {
-                    toRight = i > panelIndex;
-                    panels[i].HideMenu(toRight);
+                    // toRight = i > panelIndex;
+                    panels[i].HideMenu();
                     print("Hiding panel " + i);
                 }
             }
@@ -45,8 +45,8 @@ public class PanelGroup : MonoBehaviour
                 {   
                     panels[i].gameObject.SetActive(true);
                     print("Showing panel " + i);
-                    bool fromRight = !toRight;
-                    panels[i].ShowMenu(fromRight);
+                    // bool fromRight = !toRight;
+                    panels[i].ShowMenu();
                 }
             }
             isChanging = false;
