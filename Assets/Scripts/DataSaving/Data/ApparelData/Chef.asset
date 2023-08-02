@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75720f168fdb5bd49820a2cc30e677e1, type: 3}
   m_Name: Chef
   m_EditorClassIdentifier: 
+  uniqueName: chef
   itemName: Chef
-  itemPrice: 15
+  itemCosts:
+    keys:
+    - food
+    - cloth
+    - metal
+    values: 320000001e0000000a000000
   apparelModel: {fileID: 0}

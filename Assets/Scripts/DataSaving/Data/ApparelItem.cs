@@ -7,6 +7,6 @@ public class ApparelItem : ScriptableObject
 {
     public string uniqueName;
     public string itemName;
-    public Dictionary<string, int> itemCosts;
+    public SerializableStringIntDictionary itemCosts;
     public GameObject apparelModel;
 }

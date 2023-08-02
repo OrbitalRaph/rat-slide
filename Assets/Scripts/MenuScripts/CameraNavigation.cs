@@ -4,31 +4,43 @@ using UnityEngine;
 
 public class CameraNavigation : MonoBehaviour
 {
-    public Transform trésorerieMenu;
-    public Transform magasinApparenceMenu;
-    public Transform magasinPlancheSurfMenu;
-    public Transform zoneLancementMenu;
+    public Transform defaultTarget;
+    public Transform treasuryMenu;
+    public Transform apparelShopMenu;
+    public Transform BoardShopMenu;
+    public Transform LaunchZoneMenu;
 
     private Transform currentTarget;
 
+    private void Start()
+    {
+        currentTarget = defaultTarget;
+        LeanTween.moveX(defaultTarget.gameObject, 20, 40f).setEase(LeanTweenType.easeInOutQuad).setLoopPingPong();
+    }
+
+    public void MoveToDefaultTarget()
+    {
+        currentTarget = defaultTarget;
+    }
+
     public void MoveToTrésorerie()
     {
-        currentTarget = trésorerieMenu;
+        currentTarget = treasuryMenu;
     }
 
     public void MoveToMagasinApparence()
     {
-        currentTarget = magasinApparenceMenu;
+        currentTarget = apparelShopMenu;
     }
 
     public void MoveToMagasinPlancheSurf()
     {
-        currentTarget = magasinPlancheSurfMenu;
+        currentTarget = BoardShopMenu;
     }
 
     public void MoveToZoneLancement()
     {
-        currentTarget = zoneLancementMenu;
+        currentTarget = LaunchZoneMenu;
     }
 
     private void Update()

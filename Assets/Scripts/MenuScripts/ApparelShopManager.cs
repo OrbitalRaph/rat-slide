@@ -11,8 +11,6 @@ namespace ApparelShop {
         private string equippedApparel;
         public GameObject itemManagerPrefab;
         public Transform itemListParent;
-        public Text currencyText;
-
         private void Start()
         {
             // Populate the shop with available items
@@ -40,7 +38,8 @@ namespace ApparelShop {
             }
 
             // Update the displayed currency value
-            UpdateCurrencyText();
+            CurrencyManager.Instance.GetCurrencyDisplayers();
+            CurrencyManager.Instance.updateCurrencyDisplay();
         }
 
         public void LoadGameData(GameData gameData)
@@ -95,7 +94,7 @@ namespace ApparelShop {
                 itemManager.UpdateButtonAppearance(true, false);
 
                 // Update the displayed currency value
-                UpdateCurrencyText();
+                CurrencyManager.Instance.updateCurrencyDisplay();
             }
             else
             {
@@ -110,11 +109,6 @@ namespace ApparelShop {
 
             // Update the UI elements
             itemManager.UpdateButtonAppearance(true, true);
-        }
-
-        private void UpdateCurrencyText()
-        {
-            // currencyText.text = "Currency: " + CurrencyManager.Instance.playerCurrency.ToString();
         }
 
 
@@ -154,5 +148,11 @@ namespace ApparelShop {
         // {
         //     // Save the item equip status to the data file
         // }
+
+    private void OnEnable()
+    {
+        CurrencyManager.Instance.GetCurrencyDisplayers();
+        CurrencyManager.Instance.updateCurrencyDisplay();
+    }
     }
 }

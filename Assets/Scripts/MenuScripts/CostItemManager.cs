@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class CostItemManager : MonoBehaviour
+public class CostItemManager : MonoBehaviour, ICurrencyDisplay
 {
     public Image icon;
-    public Text costText;
-    public int cost;
+    public TextMeshProUGUI costText;
+    private int cost;
     private CurrencyType currencyType;
 
     public void SetCostItem(CurrencyType currencyType, int cost)

@@ -11,11 +11,13 @@ namespace ApparelShop {
         public GameObject costPrefab;
         public Transform costsListParent;
         private ApparelItem item;
+        private List<GameObject> costsObjects = new List<GameObject>();
 
         // Method to initialize the UI with item data
         public void Initialize(ApparelItem item, bool isPurchased, bool isEquipped, bool isAffordable)
         {
             this.item = item;
+            // if (!isPurchased)
             PopulateCostsList();
             // set itemModelPreviewImage to the appropriate sprite or 3D model
             UpdateButtonAppearance(isPurchased, isEquipped, isAffordable);
@@ -23,13 +25,14 @@ namespace ApparelShop {
 
         private void PopulateCostsList()
         {
-            // Clear the costs list
             foreach (KeyValuePair<string, int> cost in item.itemCosts)
             {
                 // Instantiate the UI element for the cost
                 GameObject costObject = Instantiate(costPrefab, costsListParent);
                 CostItemManager costManager = costObject.GetComponent<CostItemManager>();
-                // costManager.SetCostItem(CurrencyManager.Instance.getCurrencyType, cost.Value);
+                CurrencyType currencyType = CurrencyManager.Instance.GetCurrencyType(cost.Key);
+                costManager.SetCostItem(currencyType, cost.Value);
+                costsObjects.Add(costObject);
             }
         }
 

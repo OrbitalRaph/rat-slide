@@ -26,10 +26,19 @@ namespace MenuScripts
         public void OnTabSelected(TabButton button)
         {
             if (panelGroup.isChanging) { return; }
-            if (selectedTab != null)
-            {
+
+            if (selectedTab == button) { 
                 selectedTab.Deselect();
+                selectedTab = null;
+                ResetTabs();
+                
+                if (panelGroup != null)
+                {
+                    panelGroup.SetPageIndex(-1);
+                }
+                return;
             }
+            
             selectedTab = button;
             selectedTab.Select();
 
