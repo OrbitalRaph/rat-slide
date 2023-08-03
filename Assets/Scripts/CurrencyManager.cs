@@ -7,7 +7,7 @@ using System.Linq;
 public class CurrencyManager : MonoBehaviour, IDataSaving
 {
     public List<CurrencyType> currencyTypes;
-    public Dictionary<string, int> playerCurrency;
+    public SerializableDictionary<string, int> playerCurrency;
     public static CurrencyManager Instance { get; private set; }
     // private readonly List<ICurrencyDisplay> currencyDisplayers = new();
     public UnityEvent onCurrencyChanged;
@@ -24,7 +24,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
 
     public void LoadGameData(GameData gameData)
     {
-        playerCurrency = new Dictionary<string, int>();
+        playerCurrency = new SerializableDictionary<string, int>();
         foreach (CurrencyType currencyType in this.currencyTypes)
         {
             this.playerCurrency.Add(currencyType.uniqueName, 0);
@@ -63,17 +63,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         UpdateCurrencyDisplay();
     }
 
-    public void DeductCurrency(Dictionary<string, int> itemCosts)
-    {
-        foreach (KeyValuePair<string, int> itemCost in itemCosts)
-        {
-            this.playerCurrency[itemCost.Key] -= itemCost.Value;
-        }
-
-        UpdateCurrencyDisplay();
-    }
-
-    public void DeductCurrency(SerializableStringIntDictionary itemCosts)
+    public void DeductCurrency(SerializableDictionary<string, int> itemCosts)
     {
         foreach (KeyValuePair<string, int> itemCost in itemCosts)
         {
@@ -95,7 +85,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         UpdateCurrencyDisplay();
     }
 
-    private void SetCurrency(Dictionary<string, int> currency)
+    private void SetCurrency(SerializableDictionary<string, int> currency)
     {
         foreach (KeyValuePair<string, int> currencyAmount in currency)
         {
@@ -104,21 +94,9 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         UpdateCurrencyDisplay();
     }
 
-    public Dictionary<string, int> GetCurrency()
+    public SerializableDictionary<string, int> GetCurrency()
     {
         return this.playerCurrency;
-    }
-
-    public bool canAfford(Dictionary<string, int> itemCosts)
-    {
-        foreach (KeyValuePair<string, int> itemCost in itemCosts)
-        {
-            if (this.playerCurrency[itemCost.Key] < itemCost.Value)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     public bool CanAfford(string currencyName, int amount)
@@ -126,7 +104,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         return this.playerCurrency[currencyName] >= amount;
     }
 
-    public bool CanAfford(SerializableStringIntDictionary itemCosts)
+    public bool CanAfford(SerializableDictionary<string, int> itemCosts)
     {
         foreach (KeyValuePair<string, int> itemCost in itemCosts)
         {

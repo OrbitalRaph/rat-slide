@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ApparelShop {
+namespace ApparelShop
+{
     public class ApparelShopManager : MonoBehaviour, IDataSaving
     {
         public ApparelItem[] ApparelItems;
-        private Dictionary<string, bool> unlockedApparels;
-        private string equippedApparel;
         public GameObject itemManagerPrefab;
         public Transform itemListParent;
+        private SerializableDictionary<string, bool> unlockedApparels;
+        private string equippedApparel;
+        private ApparelItemManager equippedItemManager;
+
         private void Start()
         {
             // Populate the shop with available items
@@ -23,12 +26,17 @@ namespace ApparelShop {
             {
                 bool isPurchased = IsItemPurchased(item);
                 bool isEquipped = IsItemEquipped(item);
-                bool isAffordable = IsItemAffordable(item);
 
                 // Instantiate the UI element for the item
                 GameObject itemManagerObject = Instantiate(itemManagerPrefab, itemListParent);
                 ApparelItemManager itemManager = itemManagerObject.GetComponent<ApparelItemManager>();
-                itemManager.Initialize(item, isPurchased, isEquipped, isAffordable);
+                itemManager.Initialize(item, isPurchased, isEquipped);
+
+                if (isEquipped)
+                {
+                    // Save a reference to the equipped item manager
+                    equippedItemManager = itemManager;
+                }
 
                 // Attach button click event handlers
                 Button actionButton = itemManager.actionButton;
@@ -43,12 +51,12 @@ namespace ApparelShop {
 
         public void LoadGameData(GameData gameData)
         {
-            unlockedApparels = new Dictionary<string, bool>();
+            unlockedApparels = new SerializableDictionary<string, bool>();
             foreach (ApparelItem item in ApparelItems)
             {
                 unlockedApparels.Add(item.uniqueName, false);
             }
-            
+
             // Load the purchased items dictionary from the game data
             foreach (KeyValuePair<string, bool> item in gameData.unlockedApparels)
             {
@@ -84,13 +92,15 @@ namespace ApparelShop {
         {
             if (IsItemAffordable(item) && !IsItemPurchased(item))
             {
-                MarkItemAsPurchased(item);
+                // Mark item as purchased
+                unlockedApparels[item.uniqueName] = true;
 
                 // Deduct the item price from player currency
                 CurrencyManager.Instance.DeductCurrency(item.itemCosts);
 
                 // Update the UI elements
-                itemManager.UpdateButtonAppearance(true, false);
+                itemManager.UpdateItemAppearance(true, false);
+                itemManager.RemoveCostsList();
 
                 // Update the displayed currency value
                 CurrencyManager.Instance.UpdateCurrencyDisplay();
@@ -103,11 +113,22 @@ namespace ApparelShop {
 
         private void OnEquipButtonClick(ApparelItem item, ApparelItemManager itemManager)
         {
+            // Unequip the currently equipped item
+            equippedItemManager?.UpdateItemAppearance(true, false);
+
+            if (itemManager == equippedItemManager)
+            {
+                // If the item is already equipped, unequip it`
+                equippedApparel = null;
+                equippedItemManager = null;
+                return;
+            }
             // Equip the item to the player character
-            EquipItem(item);
+            equippedApparel = item.uniqueName;
+            equippedItemManager = itemManager;
 
             // Update the UI elements
-            itemManager.UpdateButtonAppearance(true, true);
+            itemManager.UpdateItemAppearance(true, true);
         }
 
 
@@ -118,34 +139,12 @@ namespace ApparelShop {
 
         private bool IsItemPurchased(ApparelItem item)
         {
-            // Implement logic to check if the item is purchased
-            return false;
+            return unlockedApparels[item.uniqueName];
         }
-
-        private void MarkItemAsPurchased(ApparelItem item)
-        {
-            // Implement logic to mark the item as purchased
-        }
-
-        // private void SaveItemPurchaseStatus(ApparelItem item)
-        // {
-        //     // Save the item purchase status to the data file
-        // }
 
         private bool IsItemEquipped(ApparelItem item)
         {
-            // Implement logic to check if the item is equipped
-            return false;
+            return equippedApparel == item.uniqueName;
         }
-
-        private void EquipItem(ApparelItem item)
-        {
-            // Implement logic to equip the item to the player character
-        }
-
-        // private void SaveItemEquipStatus(ApparelItem item)
-        // {
-        //     // Save the item equip status to the data file
-        // }
     }
 }

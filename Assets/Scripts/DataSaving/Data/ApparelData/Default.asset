@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueName: default
   itemName: Default
-  _itemCosts:
+  itemCosts:
     keys:
+    - electronics
     - food
-    values: 01000000
-  apparelModel: {fileID: 0}
+    - wood
+    values: 0a0000000a0000000a000000
+  itemTexture: {fileID: 8400000, guid: 2e91ec15f209b1448ae36c2f2fdff273, type: 2}

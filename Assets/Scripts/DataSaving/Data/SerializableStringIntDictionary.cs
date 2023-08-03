@@ -3,49 +3,74 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class SerializableStringIntDictionary : IEnumerable<KeyValuePair<string, int>>
+public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TKey, TValue>>
 {
-    public List<string> keys = new List<string>();
-    public List<int> values = new List<int>();
+    [SerializeField] private List<TKey> keys = new List<TKey>();
+    [SerializeField] private List<TValue> values = new List<TValue>();
 
-    public int this[string key]
+    public TValue this[TKey key]
     {
         get
         {
-            if (keys.Contains(key))
+            int index = keys.IndexOf(key);
+            if (index >= 0 && index < values.Count)
             {
-                return values[keys.IndexOf(key)];
+                return values[index];
             }
             else
             {
-                return 0;
+                Debug.LogError($"Key '{key}' not found in the SerializableDictionary.");
+                return default;
             }
         }
         set
         {
-            if (keys.Contains(key))
+            int index = keys.IndexOf(key);
+            if (index >= 0 && index < values.Count)
             {
-                values[keys.IndexOf(key)] = value;
+                values[index] = value;
             }
             else
             {
-                keys.Add(key);
-                values.Add(value);
+                Debug.LogError($"Key '{key}' not found in the SerializableDictionary.");
             }
         }
     }
 
-    public IEnumerator<KeyValuePair<string, int>> GetEnumerator()
+    public int Count => keys.Count;
+
+    public void Add(TKey key, TValue value)
     {
-        for (int i = 0; i < keys.Count; i++)
+        if (!keys.Contains(key))
         {
-            yield return new KeyValuePair<string, int>(keys[i], values[i]);
+            keys.Add(key);
+            values.Add(value);
+        }
+        else
+        {
+            Debug.LogError($"Key '{key}' already exists in the SerializableDictionary.");
         }
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    public bool Remove(TKey key)
     {
-        return GetEnumerator();
+        int index = keys.IndexOf(key);
+        if (index >= 0 && index < values.Count)
+        {
+            keys.RemoveAt(index);
+            values.RemoveAt(index);
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning($"Key '{key}' not found in the SerializableDictionary.");
+            return false;
+        }
+    }
+
+    public bool ContainsKey(TKey key)
+    {
+        return keys.Contains(key);
     }
 
     public void Clear()
@@ -54,9 +79,28 @@ public class SerializableStringIntDictionary : IEnumerable<KeyValuePair<string, 
         values.Clear();
     }
 
-    public bool ContainsKey(string key)
+    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
-        return keys.Contains(key);
+        for (int i = 0; i < keys.Count; i++)
+        {
+            yield return new KeyValuePair<TKey, TValue>(keys[i], values[i]);
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public void OnBeforeSerialize()
+    { 
+    }
+
+    public void OnAfterDeserialize()
+    {
+        if (keys.Count != values.Count)
+        {
+            Debug.LogWarning("The number of keys and values in the SerializableDictionary do not match.");
+        }
     }
 }
-

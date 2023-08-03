@@ -5,18 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public Dictionary<string, int> playerCurrency;
+    public SerializableDictionary<string, int> playerCurrency;
     public string equippedApparel;
-    public Dictionary<string, bool> unlockedApparels;
+    public SerializableDictionary<string, bool> unlockedApparels;
     public string equippedBoard;
-    public Dictionary<string, bool> unlockedBoards;
+    public SerializableDictionary<string, bool> unlockedBoards;
 
     public GameData()
     {
-        this.playerCurrency = new Dictionary<string, int>();
+        this.playerCurrency = new SerializableDictionary<string, int>();
         this.equippedApparel = null;
-        this.unlockedApparels = new Dictionary<string, bool>();
+        this.unlockedApparels = new SerializableDictionary<string, bool>();
         this.equippedBoard = null;
-        this.unlockedBoards = new Dictionary<string, bool>();
+        this.unlockedBoards = new SerializableDictionary<string, bool>();
     }
 }

@@ -16,7 +16,7 @@ public class TreasuryManager : MonoBehaviour
     private void PopulateTreasury()
     {
         List<CurrencyType> currencyTypes = CurrencyManager.Instance.currencyTypes;
-        Dictionary<string, int> playerCurrency = CurrencyManager.Instance.playerCurrency;
+        SerializableDictionary<string, int> playerCurrency = CurrencyManager.Instance.playerCurrency;
         foreach (CurrencyType currencyType in currencyTypes)
         {
             if (playerCurrency.ContainsKey(currencyType.uniqueName))

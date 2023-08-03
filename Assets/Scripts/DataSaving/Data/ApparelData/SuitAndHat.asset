@@ -19,5 +19,5 @@ MonoBehaviour:
     - cloth
     - glass
     - plastic
-    values: 32000000050000000a000000
-  apparelModel: {fileID: 0}
+    values: 320000000a00000014000000
+  itemTexture: {fileID: 8400000, guid: 2e91ec15f209b1448ae36c2f2fdff273, type: 2}
