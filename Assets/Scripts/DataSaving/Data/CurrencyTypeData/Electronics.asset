@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueName: electronics
   typeName: Electronics
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6e07cca48c5a49846bc39a5c6268cb9c, type: 3}
   rarity: 7

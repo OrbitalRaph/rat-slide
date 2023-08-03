@@ -15,10 +15,7 @@ namespace MenuScripts
 
         public void Subscribe(TabButton button)
         {
-            if (tabButtons == null)
-            {
-                tabButtons = new List<TabButton>();
-            }
+            tabButtons ??= new List<TabButton>();
 
             tabButtons.Add(button);
         }
@@ -32,10 +29,7 @@ namespace MenuScripts
                 selectedTab = null;
                 ResetTabs();
                 
-                if (panelGroup != null)
-                {
-                    panelGroup.SetPageIndex(-1);
-                }
+                panelGroup?.SetPageIndex(-1);
                 return;
             }
             
@@ -44,11 +38,9 @@ namespace MenuScripts
 
             ResetTabs();
             button.image.sprite = tabActive;
+            button.iconPosition.transform.localPosition = new Vector3(0, -5, 0);
             
-            if (panelGroup != null)
-            {
-                panelGroup.SetPageIndex(button.transform.GetSiblingIndex());
-            }
+            panelGroup?.SetPageIndex(button.transform.GetSiblingIndex());
         }
 
         public void ResetTabs()
@@ -57,6 +49,7 @@ namespace MenuScripts
             {
                 if (button == selectedTab) { continue; }
                 button.image.sprite = tabIdle;
+                button.iconPosition.transform.localPosition = new Vector3(0, 8, 0);
             }
         }
     }

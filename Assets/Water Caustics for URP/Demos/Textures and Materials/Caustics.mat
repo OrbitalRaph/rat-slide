@@ -33,12 +33,12 @@ Material:
     - _CausticsFadeAmount: 1
     - _CausticsFadeHardness: 0.5
     - _CausticsNdotLMaskStrength: 0
-    - _CausticsScale: 4
+    - _CausticsScale: 8
     - _CausticsSceneLuminanceMaskStrength: 0
     - _CausticsShadowMaskStrength: 0
     - _CausticsSpeed: 0.059
     - _CausticsSplit: 0.219
-    - _CausticsStrength: 0.049
+    - _CausticsStrength: 0.05
     m_Colors: []
   m_BuildTextureStacks: []
 --- !u!114 &5069349641695361168

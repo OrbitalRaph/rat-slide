@@ -3,7 +3,92 @@ guid: edda623f1760bd54caf226af4678979a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ACIER
+    second: {fileID: 2100000, guid: 9f63a3395a98b0041a68355a5055dd59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BRIQUE
+    second: {fileID: 2100000, guid: 6b597758aeaf33e4c9b9d5f7e9f51c73, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "B\xC9TON"
+    second: {fileID: 2100000, guid: b78f5a33048899f449b6db71df465a0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TUYAU
+    second: {fileID: 2100000, guid: 4f26226a7828c1345970c872ea1e386a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blanc
+    second: {fileID: 2100000, guid: 91fabba8ac691484c814c9abd5663fdf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bleu mer
+    second: {fileID: 2100000, guid: ac8acc486ebde11429ce2cd7b767e8e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bois
+    second: {fileID: 2100000, guid: 555042994080513488d8835c8ed7b66b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brun
+    second: {fileID: 2100000, guid: 3da611af15fc209439ad7486cf2de479, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brun pale
+    second: {fileID: 2100000, guid: 336b03880facab04391f102a97e438f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: chrome
+    second: {fileID: 2100000, guid: 5f15aa09636958144b31ade97d81a700, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jeans
+    second: {fileID: 2100000, guid: 25b5ee2d525f84a488bc5c9fe3c4d7b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lumiere
+    second: {fileID: 2100000, guid: ca5ac3ebb4382344385bc9f5ce05bd3f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: noir
+    second: {fileID: 2100000, guid: 195df7ce9f34de946b39b6a2eb57eca2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rouge
+    second: {fileID: 2100000, guid: d3a29f96b3863934fa3ffdf8a9b2e675, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: toile
+    second: {fileID: 2100000, guid: 8450c1e2d0695dc4e9343cd702a7dd76, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: vert
+    second: {fileID: 2100000, guid: 7b8dc303913a3a549bb34801abb3ec2a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: vert pale
+    second: {fileID: 2100000, guid: 09f8d05fe173eb94ba5e81136216b1fb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -37,7 +122,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
@@ -48,7 +133,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1

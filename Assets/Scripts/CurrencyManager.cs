@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 
 public class CurrencyManager : MonoBehaviour, IDataSaving
@@ -8,7 +9,9 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     public List<CurrencyType> currencyTypes;
     public Dictionary<string, int> playerCurrency;
     public static CurrencyManager Instance { get; private set; }
-    private List<ICurrencyDisplay> currencyDisplayers = new List<ICurrencyDisplay>();
+    // private readonly List<ICurrencyDisplay> currencyDisplayers = new();
+    public UnityEvent onCurrencyChanged;
+    
 
     private void Awake()
     {
@@ -21,12 +24,12 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
 
     public void LoadGameData(GameData gameData)
     {
-        this.playerCurrency = new Dictionary<string, int>();
+        playerCurrency = new Dictionary<string, int>();
         foreach (CurrencyType currencyType in this.currencyTypes)
         {
             this.playerCurrency.Add(currencyType.uniqueName, 0);
         }
-        this.SetCurrency(gameData.playerCurrency);
+        SetCurrency(gameData.playerCurrency);
     }
 
     public void SaveGameData(ref GameData gameData)
@@ -50,14 +53,14 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     {
         this.playerCurrency[currencyName] += amount;
 
-        updateCurrencyDisplay();
+        UpdateCurrencyDisplay();
     }
 
     public void DeductCurrency(string currencyName, int amount)
     {
         this.playerCurrency[currencyName] -= amount;
 
-        updateCurrencyDisplay();
+        UpdateCurrencyDisplay();
     }
 
     public void DeductCurrency(Dictionary<string, int> itemCosts)
@@ -67,7 +70,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
             this.playerCurrency[itemCost.Key] -= itemCost.Value;
         }
 
-        updateCurrencyDisplay();
+        UpdateCurrencyDisplay();
     }
 
     public void DeductCurrency(SerializableStringIntDictionary itemCosts)
@@ -77,7 +80,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
             this.playerCurrency[itemCost.Key] -= itemCost.Value;
         }
 
-        updateCurrencyDisplay();
+        UpdateCurrencyDisplay();
     }
 
     public int GetCurrency(string currencyName)
@@ -89,7 +92,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     {
         this.playerCurrency[currencyName] = amount;
 
-        updateCurrencyDisplay();
+        UpdateCurrencyDisplay();
     }
 
     private void SetCurrency(Dictionary<string, int> currency)
@@ -98,7 +101,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         {
             this.playerCurrency[currencyAmount.Key] = currencyAmount.Value;
         }
-        updateCurrencyDisplay();
+        UpdateCurrencyDisplay();
     }
 
     public Dictionary<string, int> GetCurrency()
@@ -118,12 +121,12 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         return true;
     }
 
-    public bool canAfford(string currencyName, int amount)
+    public bool CanAfford(string currencyName, int amount)
     {
         return this.playerCurrency[currencyName] >= amount;
     }
 
-    public bool canAfford(SerializableStringIntDictionary itemCosts)
+    public bool CanAfford(SerializableStringIntDictionary itemCosts)
     {
         foreach (KeyValuePair<string, int> itemCost in itemCosts)
         {
@@ -135,25 +138,26 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         return true;
     }
 
-    public void updateCurrencyDisplay()
+    public void UpdateCurrencyDisplay()
     {
-        foreach (ICurrencyDisplay currencyDisplay in this.currencyDisplayers)
-        {
-            currencyDisplay.UpdatePlayerCurrency();
-        }
+        onCurrencyChanged.Invoke();
+        // foreach (ICurrencyDisplay currencyDisplay in this.currencyDisplayers)
+        // {
+        //     currencyDisplay.UpdatePlayerCurrency();
+        // }
     }
 
-    public void GetCurrencyDisplayers()
-    {
-        IEnumerable<ICurrencyDisplay> currencyDisplayers = FindObjectsOfType<MonoBehaviour>().OfType<ICurrencyDisplay>();
+    // public void GetCurrencyDisplayers()
+    // {
+    //     IEnumerable<ICurrencyDisplay> currencyDisplayers = FindObjectsOfType<MonoBehaviour>().OfType<ICurrencyDisplay>();
 
-        this.currencyDisplayers.Clear();
+    //     this.currencyDisplayers.Clear();
 
-        foreach (ICurrencyDisplay currencyDisplayer in currencyDisplayers)
-        {
-            this.currencyDisplayers.Add(currencyDisplayer);
-        }
-    }
+    //     foreach (ICurrencyDisplay currencyDisplayer in currencyDisplayers)
+    //     {
+    //         this.currencyDisplayers.Add(currencyDisplayer);
+    //     }
+    // }
 
     public void DebugAddCurrency()
     {
@@ -161,6 +165,6 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         {
             this.playerCurrency[currencyType.uniqueName] += 100;
         }
-        updateCurrencyDisplay();
+        UpdateCurrencyDisplay();
     }
 }

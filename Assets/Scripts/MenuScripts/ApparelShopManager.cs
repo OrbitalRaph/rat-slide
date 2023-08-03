@@ -38,8 +38,7 @@ namespace ApparelShop {
             }
 
             // Update the displayed currency value
-            CurrencyManager.Instance.GetCurrencyDisplayers();
-            CurrencyManager.Instance.updateCurrencyDisplay();
+            CurrencyManager.Instance.UpdateCurrencyDisplay();
         }
 
         public void LoadGameData(GameData gameData)
@@ -94,7 +93,7 @@ namespace ApparelShop {
                 itemManager.UpdateButtonAppearance(true, false);
 
                 // Update the displayed currency value
-                CurrencyManager.Instance.updateCurrencyDisplay();
+                CurrencyManager.Instance.UpdateCurrencyDisplay();
             }
             else
             {
@@ -114,7 +113,7 @@ namespace ApparelShop {
 
         private bool IsItemAffordable(ApparelItem item)
         {
-            return CurrencyManager.Instance.canAfford(item.itemCosts);
+            return CurrencyManager.Instance.CanAfford(item.itemCosts);
         }
 
         private bool IsItemPurchased(ApparelItem item)
@@ -148,11 +147,5 @@ namespace ApparelShop {
         // {
         //     // Save the item equip status to the data file
         // }
-
-    private void OnEnable()
-    {
-        CurrencyManager.Instance.GetCurrencyDisplayers();
-        CurrencyManager.Instance.updateCurrencyDisplay();
-    }
     }
 }

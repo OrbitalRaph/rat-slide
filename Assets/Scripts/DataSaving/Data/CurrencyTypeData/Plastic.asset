@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueName: plastic
   typeName: Plastic
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7379001131cb3744d93eca4bcedd8b16, type: 3}
   rarity: 4

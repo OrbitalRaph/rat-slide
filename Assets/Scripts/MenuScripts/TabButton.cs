@@ -12,11 +12,12 @@ namespace MenuScripts
     {
         public TabGroup tabGroup;
         public Image image;
+        public Transform iconPosition;
         public UnityEvent onTabSelected;
         public UnityEvent onTabDeselected;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             image = GetComponent<Image>();
             tabGroup.Subscribe(this);
@@ -29,18 +30,12 @@ namespace MenuScripts
 
         public void Select()
         {
-            if (onTabSelected != null)
-            {
-                onTabSelected.Invoke();
-            }
+            onTabSelected?.Invoke();
         }
 
         public void Deselect()
         {
-            if (onTabDeselected != null)
-            {
-                onTabDeselected.Invoke();
-            }
+            onTabDeselected?.Invoke();
         }
     }
 }

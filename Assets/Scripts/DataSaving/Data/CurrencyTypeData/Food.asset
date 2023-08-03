@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueName: food
   typeName: Food
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 89f848eedeb8bb8498f295f824086ae3, type: 3}
   rarity: 0

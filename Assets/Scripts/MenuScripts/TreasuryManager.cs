@@ -27,13 +27,6 @@ public class TreasuryManager : MonoBehaviour
             }
         }
 
-        CurrencyManager.Instance.GetCurrencyDisplayers();
-        CurrencyManager.Instance.updateCurrencyDisplay();
-    }
-
-    private void OnEnable()
-    {
-        CurrencyManager.Instance.GetCurrencyDisplayers();
-        CurrencyManager.Instance.updateCurrencyDisplay();
+        CurrencyManager.Instance.UpdateCurrencyDisplay();
     }
 }

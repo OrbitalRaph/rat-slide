@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniqueName: metal
   typeName: Metal
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0cb7d4e282839e949bd0d412dda6e02f, type: 3}
   rarity: 4
