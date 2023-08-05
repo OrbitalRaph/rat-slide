@@ -11,7 +11,6 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     public static CurrencyManager Instance { get; private set; }
     // private readonly List<ICurrencyDisplay> currencyDisplayers = new();
     public UnityEvent onCurrencyChanged;
-    
 
     private void Awake()
     {
@@ -20,26 +19,27 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
             Debug.LogError("Found multiple instances of CurrencyManager");
         }
         Instance = this;
+
+        playerCurrency = new SerializableDictionary<string, int>();
+        foreach (CurrencyType currencyType in currencyTypes)
+        {
+            playerCurrency.Add(currencyType.uniqueName, 0);
+        }
     }
 
     public void LoadGameData(GameData gameData)
     {
-        playerCurrency = new SerializableDictionary<string, int>();
-        foreach (CurrencyType currencyType in this.currencyTypes)
-        {
-            this.playerCurrency.Add(currencyType.uniqueName, 0);
-        }
         SetCurrency(gameData.playerCurrency);
     }
 
     public void SaveGameData(ref GameData gameData)
     {
-        gameData.playerCurrency = this.playerCurrency;
+        gameData.playerCurrency = playerCurrency;
     }
 
     public CurrencyType GetCurrencyType(string currencyName)
     {
-        foreach (CurrencyType currencyType in this.currencyTypes)
+        foreach (CurrencyType currencyType in currencyTypes)
         {
             if (currencyType.uniqueName == currencyName)
             {
@@ -51,14 +51,14 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
 
     public void AddCurrency(string currencyName, int amount)
     {
-        this.playerCurrency[currencyName] += amount;
+        playerCurrency[currencyName] += amount;
 
         UpdateCurrencyDisplay();
     }
 
     public void DeductCurrency(string currencyName, int amount)
     {
-        this.playerCurrency[currencyName] -= amount;
+        playerCurrency[currencyName] -= amount;
 
         UpdateCurrencyDisplay();
     }
@@ -67,7 +67,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     {
         foreach (KeyValuePair<string, int> itemCost in itemCosts)
         {
-            this.playerCurrency[itemCost.Key] -= itemCost.Value;
+            playerCurrency[itemCost.Key] -= itemCost.Value;
         }
 
         UpdateCurrencyDisplay();
@@ -75,12 +75,12 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
 
     public int GetCurrency(string currencyName)
     {
-        return this.playerCurrency[currencyName];
+        return playerCurrency[currencyName];
     }
 
     public void SetCurrency(string currencyName, int amount)
     {
-        this.playerCurrency[currencyName] = amount;
+        playerCurrency[currencyName] = amount;
 
         UpdateCurrencyDisplay();
     }
@@ -89,26 +89,26 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     {
         foreach (KeyValuePair<string, int> currencyAmount in currency)
         {
-            this.playerCurrency[currencyAmount.Key] = currencyAmount.Value;
+            playerCurrency[currencyAmount.Key] = currencyAmount.Value;
         }
         UpdateCurrencyDisplay();
     }
 
     public SerializableDictionary<string, int> GetCurrency()
     {
-        return this.playerCurrency;
+        return playerCurrency;
     }
 
     public bool CanAfford(string currencyName, int amount)
     {
-        return this.playerCurrency[currencyName] >= amount;
+        return playerCurrency[currencyName] >= amount;
     }
 
     public bool CanAfford(SerializableDictionary<string, int> itemCosts)
     {
         foreach (KeyValuePair<string, int> itemCost in itemCosts)
         {
-            if (this.playerCurrency[itemCost.Key] < itemCost.Value)
+            if (playerCurrency[itemCost.Key] < itemCost.Value)
             {
                 return false;
             }
@@ -139,9 +139,9 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
 
     public void DebugAddCurrency()
     {
-        foreach (CurrencyType currencyType in this.currencyTypes)
+        foreach (CurrencyType currencyType in currencyTypes)
         {
-            this.playerCurrency[currencyType.uniqueName] += 100;
+            playerCurrency[currencyType.uniqueName] += 100;
         }
         UpdateCurrencyDisplay();
     }

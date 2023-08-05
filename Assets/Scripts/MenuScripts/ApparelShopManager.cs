@@ -10,15 +10,10 @@ namespace ApparelShop
         public ApparelItem[] ApparelItems;
         public GameObject itemManagerPrefab;
         public Transform itemListParent;
+        public string apparelType;
         private SerializableDictionary<string, bool> unlockedApparels;
         private string equippedApparel;
         private ApparelItemManager equippedItemManager;
-
-        private void Start()
-        {
-            // Populate the shop with available items
-            PopulateShop();
-        }
 
         private void PopulateShop()
         {
@@ -52,26 +47,34 @@ namespace ApparelShop
         public void LoadGameData(GameData gameData)
         {
             unlockedApparels = new SerializableDictionary<string, bool>();
+
             foreach (ApparelItem item in ApparelItems)
             {
-                unlockedApparels.Add(item.uniqueName, false);
-            }
-
-            // Load the purchased items dictionary from the game data
-            foreach (KeyValuePair<string, bool> item in gameData.unlockedApparels)
-            {
-                unlockedApparels[item.Key] = item.Value;
+                bool isUnlocked = gameData.unlockedApparels.ContainsKey(item.uniqueName) && gameData.unlockedApparels[item.uniqueName];
+                unlockedApparels.Add(item.uniqueName, isUnlocked);
             }
 
             // Load the equipped item from the game data
-            equippedApparel = gameData.equippedApparel;
+            equippedApparel = gameData.equippedApparels[apparelType];
+
+            PopulateShop();
         }
 
         public void SaveGameData(ref GameData gameData)
         {
             // Save the purchased items dictionary to the game data
-            gameData.unlockedApparels = unlockedApparels;
-            gameData.equippedApparel = equippedApparel;
+            foreach (KeyValuePair<string, bool> item in unlockedApparels)
+            {
+                if (gameData.unlockedApparels.ContainsKey(item.Key))
+                {
+                    gameData.unlockedApparels[item.Key] = item.Value;
+                    continue;
+                }
+                gameData.unlockedApparels.Add(item.Key, item.Value);
+            }
+
+            // Save the equipped item to the game data
+            gameData.equippedApparels[apparelType] = equippedApparel;
         }
 
         private void OnButtonClick(ApparelItem item, ApparelItemManager itemManager)

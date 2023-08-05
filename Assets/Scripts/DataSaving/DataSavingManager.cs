@@ -23,27 +23,27 @@ public class DataSavingManager : MonoBehaviour
 
     private void Start()
     {
-        this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, this.fileName);
-        this.dataSavingObjects = GetDataSavingObjects();
+        fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        dataSavingObjects = GetDataSavingObjects();
         LoadGameData();
     }
 
     // Method to load saved data
     private void LoadGameData()
     {
-        this.gameData = this.fileDataHandler.Load();
+        gameData = fileDataHandler.Load();
 
         // Load saved data from PlayerPrefs
-        if (this.gameData == null)
+        if (gameData == null)
         {
             Debug.Log("No saved data found, initializing new GameData object");
-            this.gameData = new GameData();
+            gameData = new GameData();
         }
 
         // Call the LoadGameData method on all objects in the scene that implement the IDataSaving interface
         foreach (IDataSaving dataSavingObject in dataSavingObjects)
         {
-            dataSavingObject.LoadGameData(this.gameData);
+            dataSavingObject.LoadGameData(gameData);
         }
     }
 
@@ -53,11 +53,11 @@ public class DataSavingManager : MonoBehaviour
         // Call the SaveGameData method on all objects in the scene that implement the IDataSaving interface
         foreach (IDataSaving dataSavingObject in dataSavingObjects)
         {
-            dataSavingObject.SaveGameData(ref this.gameData);
+            dataSavingObject.SaveGameData(ref gameData);
         }
 
         // Save the GameData object to a file
-        this.fileDataHandler.Save(this.gameData);
+        fileDataHandler.Save(gameData);
     }
 
     private void OnApplicationQuit()

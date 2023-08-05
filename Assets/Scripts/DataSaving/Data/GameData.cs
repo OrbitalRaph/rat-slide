@@ -6,17 +6,17 @@ using UnityEngine;
 public class GameData
 {
     public SerializableDictionary<string, int> playerCurrency;
-    public string equippedApparel;
     public SerializableDictionary<string, bool> unlockedApparels;
-    public string equippedBoard;
-    public SerializableDictionary<string, bool> unlockedBoards;
+    public SerializableDictionary<string, string> equippedApparels;
 
     public GameData()
     {
-        this.playerCurrency = new SerializableDictionary<string, int>();
-        this.equippedApparel = null;
-        this.unlockedApparels = new SerializableDictionary<string, bool>();
-        this.equippedBoard = null;
-        this.unlockedBoards = new SerializableDictionary<string, bool>();
+        playerCurrency = new SerializableDictionary<string, int>();
+        unlockedApparels = new SerializableDictionary<string, bool>();
+        equippedApparels = new SerializableDictionary<string, string>
+        {
+            { "outfit", "" },
+            { "board", "" },
+        };
     }
 }
