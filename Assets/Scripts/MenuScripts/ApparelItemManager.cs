@@ -6,9 +6,11 @@ using TMPro;
 
 namespace ApparelShop
 {
+    /// <summary>
+    /// Cette classe gère un item du magasin d'habillement.
+    /// </summary>
     public class ApparelItemManager : MonoBehaviour
     {
-        // public GameObject itemModelPreview;
         public Button actionButton;
         [SerializeField] private TextMeshProUGUI actionButtonText;
         [SerializeField] private Image backdropImage;
@@ -23,9 +25,12 @@ namespace ApparelShop
         public Sprite greenBackdropSprite;
         public Transform costsListParent;
         private ApparelItem item;
-        private List<GameObject> costsObjects = new List<GameObject>();
+        private readonly List<GameObject> costsObjects = new();
 
-        // Method to initialize the UI with item data
+        /// <summary>
+        /// Cette méthode est appelée lorsque le magasin d'habillement instancie un item manager.
+        /// Elle permet d'initialiser l'item manager.
+        /// </summary>
         public void Initialize(ApparelItem item, bool isPurchased, bool isEquipped)
         {
             this.item = item;
@@ -37,11 +42,15 @@ namespace ApparelShop
             UpdateItemAppearance(isPurchased, isEquipped);
         }
 
+        /// <summary>
+        /// Cette méthode est appelée à l'initialisation de l'item manager.
+        /// Elle permet d'instancier les éléments UI pour les coûts de l'item.
+        /// </summary>
         private void PopulateCostsList()
         {
             foreach (KeyValuePair<string, int> cost in item.itemCosts)
             {
-                // Instantiate the UI element for the cost
+                // Instancie un cost manager pour chaque coût
                 GameObject costObject = Instantiate(costPrefab, costsListParent);
                 CostItemManager costManager = costObject.GetComponent<CostItemManager>();
                 CurrencyType currencyType = CurrencyManager.Instance.GetCurrencyType(cost.Key);
@@ -50,28 +59,33 @@ namespace ApparelShop
             }
         }
 
-        // Method to update the button appearance based on item status
+        /// <summary>
+        /// Cette méthode met à jour l'apparence de l'item.
+        /// </summary>
         public void UpdateItemAppearance(bool isPurchased, bool isEquipped)
         {
+            // Remet le texte du bouton à sa position initiale
             actionButtonText.rectTransform.offsetMin = new Vector2(0, 5);
             actionButtonText.rectTransform.offsetMax = new Vector2(0, 0);
 
             if (isPurchased)
             {
+                // Met l'arrère plan en blanc si acheté
                 backdropImage.color = Color.white;
                 if (isEquipped)
                 {
-                    
+                    // descends le texte du bouton
                     actionButtonText.rectTransform.offsetMin = new Vector2(0, 0);
                     actionButtonText.rectTransform.offsetMax = new Vector2(0, -8);
-                    // Set button color to green if purchased and equipped
+
+                    // Met le bouton en vert si équipé 
                     actionButton.image.sprite = greenButtonSprite;
                     backdropImage.sprite = greenBackdropSprite;
                     actionButtonText.text = "Enlever";
                 }
                 else
                 {
-                    // Set button color to blue if purchased but not equipped
+                    // Met le bouton en bleu si acheté mais pas équipé
                     actionButton.image.sprite = blueButtonSprite;
                     backdropImage.sprite = blueBackdropSprite;
                     actionButtonText.text = "Enfiler";
@@ -79,17 +93,18 @@ namespace ApparelShop
             }
             else
             {
+                // Met l'arrère plan en gris si non acheté
                 backdropImage.sprite = greyBackdropSprite;
                 backdropImage.color = new Color(0.3294118f, 0.3607843f, 0.4078431f);
                 if (CurrencyManager.Instance.CanAfford(item.itemCosts))
                 {
-                    // Set button color to yellow if not purchased but affordable
+                    // Met le bouton en jaune si non acheté et achetable
                     actionButton.image.sprite = yellowButtonSprite;
                     actionButtonText.text = "Acheter";
                 }
                 else
                 {
-                    // Set button color to gray if not purchased and not affordable
+                    // Met le bouton en gris si non acheté et non achetable
                     actionButton.image.sprite = greyButtonSprite;
                     backdropImage.color = Color.gray;
                     actionButtonText.text = "Acheter";

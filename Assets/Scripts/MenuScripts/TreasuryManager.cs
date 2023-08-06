@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Cette classe gère l'affichage de tous les monnaies du joueur.
 public class TreasuryManager : MonoBehaviour
 {
     public GameObject CurrencyItemPrefab;
     public Transform itemListParent;
 
-    // Start is called before the first frame update
     private void Start()
     {
         PopulateTreasury();
     }
 
+    /// <summary>
+    /// Cette méthode permet de populer la liste des monnaies du joueur.
+    /// </summary>
     private void PopulateTreasury()
     {
         List<CurrencyType> currencyTypes = CurrencyManager.Instance.currencyTypes;

@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Cette classe gère les coûts d'un item.
+/// </summary>
 public class CostItemManager : MonoBehaviour, ICurrencyDisplay
 {
     public Image icon;
@@ -11,6 +14,9 @@ public class CostItemManager : MonoBehaviour, ICurrencyDisplay
     private int cost;
     private CurrencyType currencyType;
 
+    /// <summary>
+    /// Cette méthode permet d'initialiser le cost manager.
+    /// </summary>
     public void SetCostItem(CurrencyType currencyType, int cost)
     {
         this.currencyType = currencyType;
@@ -21,8 +27,10 @@ public class CostItemManager : MonoBehaviour, ICurrencyDisplay
 
     private void OnEnable()
     {
+        // S'abonne à l'événement de changement de monnaie
         CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdatePlayerCurrency);
 
+        // Attend une frame pour s'assurer que le CurrencyManager est instancié
         StartCoroutine(WaitForCurrencyManager());
     }
 
@@ -37,6 +45,9 @@ public class CostItemManager : MonoBehaviour, ICurrencyDisplay
         CurrencyManager.Instance.onCurrencyChanged.RemoveListener(UpdatePlayerCurrency);
     }
 
+    /// <summary>
+    /// Cette méthode met à jour l'affichage de la monnaie du joueur.
+    /// </summary>
     public void UpdatePlayerCurrency()
     {
         

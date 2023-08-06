@@ -2,11 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Cette classe permet de créer un dictionnaire sérialisable.
+/// </summary>
 [System.Serializable]
 public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TKey, TValue>>
 {
-    [SerializeField] private List<TKey> keys = new List<TKey>();
-    [SerializeField] private List<TValue> values = new List<TValue>();
+    [SerializeField] private List<TKey> keys = new();
+    [SerializeField] private List<TValue> values = new();
 
     public TValue this[TKey key]
     {
@@ -19,7 +22,7 @@ public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiv
             }
             else
             {
-                Debug.LogError($"Key '{key}' not found in the SerializableDictionary.");
+                Debug.LogError($"La clé '{key}' n'a pas été trouvée dans le SerializableDictionary.");
                 return default;
             }
         }
@@ -32,7 +35,7 @@ public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiv
             }
             else
             {
-                Debug.LogError($"Key '{key}' not found in the SerializableDictionary.");
+                Debug.LogError($"La clé '{key}' n'a pas été trouvée dans le SerializableDictionary.");
             }
         }
     }
@@ -48,7 +51,7 @@ public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiv
         }
         else
         {
-            Debug.LogError($"Key '{key}' already exists in the SerializableDictionary.");
+            Debug.LogError($"La clé '{key}' existe déjà dans le SerializableDictionary.");
         }
     }
 
@@ -63,7 +66,7 @@ public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiv
         }
         else
         {
-            Debug.LogWarning($"Key '{key}' not found in the SerializableDictionary.");
+            Debug.LogWarning($"La clé'{key}' n'a pas été trouvée dans le SerializableDictionary.");
             return false;
         }
     }
@@ -100,7 +103,7 @@ public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiv
     {
         if (keys.Count != values.Count)
         {
-            Debug.LogWarning("The number of keys and values in the SerializableDictionary do not match.");
+            Debug.LogWarning("Attention, le nombre de clés et de valeurs n'est pas le même dans le SerializableDictionary. Les données seront perdues.");
         }
     }
 }

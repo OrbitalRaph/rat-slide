@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Cette classe gère la sauvegarde des données du jeu.
+/// </summary>
 public class DataSavingManager : MonoBehaviour
 {
     [Header("Data storage configuration")]
@@ -28,47 +31,54 @@ public class DataSavingManager : MonoBehaviour
         LoadGameData();
     }
 
-    // Method to load saved data
+    /// <summary>
+    /// Cette méthode s'occupe de récupérer les données du jeu et de l'envoyer aux objets qui en ont besoin.
+    /// </summary>
     private void LoadGameData()
     {
         gameData = fileDataHandler.Load();
 
-        // Load saved data from PlayerPrefs
+        // créer un objet GameData si aucun n'est trouvé
         if (gameData == null)
         {
             Debug.Log("No saved data found, initializing new GameData object");
             gameData = new GameData();
         }
 
-        // Call the LoadGameData method on all objects in the scene that implement the IDataSaving interface
+        // Appelle la méthode LoadGameData sur tous les objets de la scène qui implémentent l'interface IDataSaving
         foreach (IDataSaving dataSavingObject in dataSavingObjects)
         {
             dataSavingObject.LoadGameData(gameData);
         }
     }
 
-    // Method to save data
+    /// <summary>
+    /// Cette méthode s'occupe de sauvegarder les données du jeu et de demander aux objets qui en ont besoin de sauvegarder leurs données.
+    /// </summary>
     private void SaveGameData()
     {
-        // Call the SaveGameData method on all objects in the scene that implement the IDataSaving interface
+        // Appelle la méthode SaveGameData sur tous les objets de la scène qui implémentent l'interface IDataSaving
         foreach (IDataSaving dataSavingObject in dataSavingObjects)
         {
             dataSavingObject.SaveGameData(ref gameData);
         }
 
-        // Save the GameData object to a file
+        // Sauvegarde les données du jeu
         fileDataHandler.Save(gameData);
     }
 
     private void OnApplicationQuit()
     {
-        // Save data when the application is closed
+        // Sauvegarde les données du jeu lorsque l'application est fermée
         SaveGameData();
     }
 
+    /// <summary>
+    /// Cette méthode permet de trouver tous les objets de la scène qui implémentent l'interface IDataSaving.
+    /// </summary>
     private List<IDataSaving> GetDataSavingObjects()
     {
-        // Find all objects in the scene that implement the IDataSaving interface
+        // Trouve tous les objets de la scène qui implémentent l'interface IDataSaving
         IEnumerable<IDataSaving> dataSavingObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataSaving>();
 
         return new List<IDataSaving>(dataSavingObjects);

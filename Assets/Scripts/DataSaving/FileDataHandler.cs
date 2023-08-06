@@ -4,6 +4,9 @@ using UnityEngine;
 using System;
 using System.IO;
 
+/// <summary>
+/// Cette classe gère le chargement et la sauvegarde des données du jeu.
+/// </summary>
 public class FileDataHandler
 {
     private string directoryPath;
@@ -15,6 +18,9 @@ public class FileDataHandler
         this.filePath = filePath;
     }
 
+    /// <summary>
+    /// Cette méthode permet de charger les données du jeu.
+    /// </summary>
     public GameData Load() {
         string fullPath = Path.Combine(directoryPath, filePath);
         GameData loadedData = null;
@@ -38,6 +44,9 @@ public class FileDataHandler
         return loadedData;
     }
 
+    /// <summary>
+    /// Cette méthode permet de sauvegarder les données du jeu.
+    /// </summary>
     public void Save(GameData gameData) {
         string fullPath = Path.Combine(directoryPath, filePath);
         try {

@@ -7,6 +7,13 @@ using UnityEngine.Events;
 
 namespace MenuScripts
 {
+
+    /// <summary>
+    /// Cette classe permet de gérer les boutons d'onglets du menu
+    /// Elle appelle des évènements lorsqu'un onglet est sélectionné ou désélectionné
+    /// Le TabButton s'enregistre au TabGroup lors de son instanciation
+    /// </summary>
+    
     [RequireComponent(typeof(Image))]
     public class TabButton : MonoBehaviour, IPointerClickHandler
     {

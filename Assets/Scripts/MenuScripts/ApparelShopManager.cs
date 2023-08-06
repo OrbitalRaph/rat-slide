@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace ApparelShop
 {
+    /// <summary>
+    /// Cette classe gère le magasin d'habillement.
+    /// </summary>
     public class ApparelShopManager : MonoBehaviour, IDataSaving
     {
         public ApparelItem[] ApparelItems;
@@ -15,6 +18,10 @@ namespace ApparelShop
         private string equippedApparel;
         private ApparelItemManager equippedItemManager;
 
+        /// <summary>
+        /// Cette méthode permet d'initialiser le magasin d'habillement.
+        /// Les items sont instanciés et les boutons sont configurés.
+        /// </summary>
         private void PopulateShop()
         {
             foreach (ApparelItem item in ApparelItems)
@@ -22,47 +29,58 @@ namespace ApparelShop
                 bool isPurchased = IsItemPurchased(item);
                 bool isEquipped = IsItemEquipped(item);
 
-                // Instantiate the UI element for the item
+                // Instencie un item manager pour chaque item
                 GameObject itemManagerObject = Instantiate(itemManagerPrefab, itemListParent);
                 ApparelItemManager itemManager = itemManagerObject.GetComponent<ApparelItemManager>();
                 itemManager.Initialize(item, isPurchased, isEquipped);
 
                 if (isEquipped)
                 {
-                    // Save a reference to the equipped item manager
+                    // Garde une référence vers l'item manager de l'item équipé
                     equippedItemManager = itemManager;
                 }
 
-                // Attach button click event handlers
+                // Configure le bouton d'action
                 Button actionButton = itemManager.actionButton;
-
-                // If the item is purchased, add the equip functionality
                 actionButton.onClick.AddListener(() => OnButtonClick(item, itemManager));
             }
 
-            // Update the displayed currency value
+            // Met à jour l'affichage de la monnaie
             CurrencyManager.Instance.UpdateCurrencyDisplay();
         }
 
+        /// <summary>
+        /// Cette méthode permet de charger les données du jeu.
+        /// Elle est appelée par le GameDataManager au démarrage du jeu.
+        /// Les items déverrouillés et équipés sont chargés.
+        /// </summary>
+        /// <param name="gameData"> Les données du jeu. </param>
         public void LoadGameData(GameData gameData)
         {
             unlockedApparels = new SerializableDictionary<string, bool>();
 
+            // Pour chaque item, vérifie si l'item est déverrouillé et l'ajoute au dictionnaire
             foreach (ApparelItem item in ApparelItems)
             {
                 bool isUnlocked = gameData.unlockedApparels.ContainsKey(item.uniqueName) && gameData.unlockedApparels[item.uniqueName];
                 unlockedApparels.Add(item.uniqueName, isUnlocked);
             }
 
-            // Load the equipped item from the game data
+            // Charge l'item équipé
             equippedApparel = gameData.equippedApparels[apparelType];
 
+            // Initialise le magasin
             PopulateShop();
         }
 
+        /// <summary>
+        /// Cette méthode permet de sauvegarder les données du jeu.
+        /// Elle est appelée par le GameDataManager à la fermeture du jeu.
+        /// Les items déverrouillés et équipés sont sauvegardés.
+        /// </summary>
         public void SaveGameData(ref GameData gameData)
         {
-            // Save the purchased items dictionary to the game data
+            // Ajoute le status des items au dictionnaire
             foreach (KeyValuePair<string, bool> item in unlockedApparels)
             {
                 if (gameData.unlockedApparels.ContainsKey(item.Key))
@@ -72,65 +90,75 @@ namespace ApparelShop
                 }
                 gameData.unlockedApparels.Add(item.Key, item.Value);
             }
-
-            // Save the equipped item to the game data
+ 
+            // Ajoute l'item équipé
             gameData.equippedApparels[apparelType] = equippedApparel;
         }
 
+        /// <summary>
+        /// Cette méthode est appelée lorsque le joueur clique sur un bouton d'action.
+        /// Si l'item est déverrouillé, il est équipé, sinon il est acheté.
+        /// </summary>
         private void OnButtonClick(ApparelItem item, ApparelItemManager itemManager)
         {
             if (IsItemPurchased(item))
             {
-                // If the item is purchased, equip it
+                // Si l'item est déverrouillé, essaye de l'équiper
                 OnEquipButtonClick(item, itemManager);
             }
             else
             {
-                // If the item is not purchased, try to purchase it
+                // Si l'item n'est pas déverrouillé, essaye de l'acheter
                 OnPurchaseButtonClick(item, itemManager);
             }
         }
 
+        /// <summary>
+        /// Cette méthode est appelée lorsque le joueur clique sur le bouton d'achat.
+        /// Si le joueur a assez d'argent, l'item est déverrouillé et acheté.
+        /// </summary>
+        /// <param name="item"> L'item à acheter. </param>
+        /// <param name="itemManager"> L'item manager de l'item à acheter. </param>
         private void OnPurchaseButtonClick(ApparelItem item, ApparelItemManager itemManager)
         {
             if (IsItemAffordable(item) && !IsItemPurchased(item))
             {
-                // Mark item as purchased
+                // Déverrouille l'item
                 unlockedApparels[item.uniqueName] = true;
 
-                // Deduct the item price from player currency
+                // Déduit le coût de l'item
                 CurrencyManager.Instance.DeductCurrency(item.itemCosts);
 
-                // Update the UI elements
+                // Met à jour l'affichage de l'item
                 itemManager.UpdateItemAppearance(true, false);
                 itemManager.RemoveCostsList();
 
-                // Update the displayed currency value
+                // Met à jour l'affichage de la monnaie
                 CurrencyManager.Instance.UpdateCurrencyDisplay();
-            }
-            else
-            {
-                // Play a sound or shake button
             }
         }
 
+        /// <summary>
+        /// Cette méthode est appelée lorsque le joueur clique sur le bouton d'équipement.
+        /// Si l'item est déjà équipé, il est déséquipé, sinon il est équipé.
+        /// </summary>
         private void OnEquipButtonClick(ApparelItem item, ApparelItemManager itemManager)
         {
-            // Unequip the currently equipped item
+            // Déséquipe l'item actuellement équipé
             equippedItemManager?.UpdateItemAppearance(true, false);
 
             if (itemManager == equippedItemManager)
             {
-                // If the item is already equipped, unequip it`
+                // Si l'item est déjà équipé, déséquipe l'item
                 equippedApparel = null;
                 equippedItemManager = null;
                 return;
             }
-            // Equip the item to the player character
+            // Sinon, équipe l'item
             equippedApparel = item.uniqueName;
             equippedItemManager = itemManager;
 
-            // Update the UI elements
+            //  Met à jour l'affichage de l'item
             itemManager.UpdateItemAppearance(true, true);
         }
 

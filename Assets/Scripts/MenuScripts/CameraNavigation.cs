@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Cette classe gère la navigation de la caméra dans le menu.
+/// </summary>
 public class CameraNavigation : MonoBehaviour
 {
     public Transform defaultTarget;
     public Transform treasuryMenu;
-    public Transform apparelShopMenu;
+    public Transform outfitShopMenu;
     public Transform BoardShopMenu;
     public Transform LaunchZoneMenu;
 
@@ -23,22 +26,22 @@ public class CameraNavigation : MonoBehaviour
         currentTarget = defaultTarget;
     }
 
-    public void MoveToTrésorerie()
+    public void MoveToTreasury()
     {
         currentTarget = treasuryMenu;
     }
 
-    public void MoveToMagasinApparence()
+    public void MoveToOutfitShop()
     {
-        currentTarget = apparelShopMenu;
+        currentTarget = outfitShopMenu;
     }
 
-    public void MoveToMagasinPlancheSurf()
+    public void MoveToBoardShop()
     {
         currentTarget = BoardShopMenu;
     }
 
-    public void MoveToZoneLancement()
+    public void MoveToLaunchZone()
     {
         currentTarget = LaunchZoneMenu;
     }
