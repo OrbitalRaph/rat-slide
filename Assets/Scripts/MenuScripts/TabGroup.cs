@@ -68,5 +68,26 @@ namespace MenuScripts
                 button.iconPosition.transform.localPosition = new Vector3(0, 8, 0);
             }
         }
+
+        /// <summary>
+        /// Cette fonction permet de cacher le groupe de boutons onglets
+        /// </summary>
+        public void HideTabGroup()
+        {
+            selectedTab.Deselect();
+            selectedTab = null;
+            ResetTabs();
+                
+            panelGroup?.SetPageIndex(-1);
+            gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Cette fonction permet d'afficher le groupe de boutons onglets
+        /// </summary>
+        public void ShowTabGroup()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

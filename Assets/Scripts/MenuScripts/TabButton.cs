@@ -13,7 +13,6 @@ namespace MenuScripts
     /// Elle appelle des évènements lorsqu'un onglet est sélectionné ou désélectionné
     /// Le TabButton s'enregistre au TabGroup lors de son instanciation
     /// </summary>
-    
     [RequireComponent(typeof(Image))]
     public class TabButton : MonoBehaviour, IPointerClickHandler
     {
@@ -23,7 +22,6 @@ namespace MenuScripts
         public UnityEvent onTabSelected;
         public UnityEvent onTabDeselected;
 
-        // Start is called before the first frame update
         private void Start()
         {
             image = GetComponent<Image>();

@@ -21,6 +21,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
             Debug.LogError("Found multiple instances of CurrencyManager");
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         playerCurrency = new SerializableDictionary<string, int>();
         foreach (CurrencyType currencyType in currencyTypes)
@@ -64,6 +65,20 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     public void AddCurrency(string currencyName, int amount)
     {
         playerCurrency[currencyName] += amount;
+
+        UpdateCurrencyDisplay();
+    }
+
+    /// <summary>
+    /// Cette méthode permet d'ajouter de la monnaie au joueur.
+    /// </summary>
+    /// <param name="currency"> Les monnaies à ajouter. </param>
+    public void AddCurrency(SerializableDictionary<string, int> currency)
+    {
+        foreach (KeyValuePair<string, int> currencyToAdd in currency)
+        {
+            playerCurrency[currencyToAdd.Key] += currencyToAdd.Value;
+        }
 
         UpdateCurrencyDisplay();
     }

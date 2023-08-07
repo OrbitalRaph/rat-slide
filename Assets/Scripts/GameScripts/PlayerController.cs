@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Ce script est attaché au joueur et permet de le déplacer de gauche à droite et de le faire sauter.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     public float laneDistance = 2.0f;
@@ -60,7 +63,6 @@ public class PlayerController : MonoBehaviour
                                            .setEase(LeanTweenType.easeInQuad)
                                            .setOnComplete(() => isRotating = false);
                               });
-
                      currentLane += direction;
                  });
     }
@@ -71,7 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             isJumping = true;
             float jumpDuration = Mathf.Sqrt(2 * jumpHeight / Physics.gravity.magnitude);
-            
+
             LeanTween.moveLocalY(gameObject, jumpHeight, jumpDuration / 2)
                      .setEase(LeanTweenType.easeOutCubic)
                      .setOnComplete(() =>
