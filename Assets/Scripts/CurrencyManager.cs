@@ -78,7 +78,6 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     {
         foreach (KeyValuePair<string, int> currencyToAdd in currency)
         {
-            print(currencyToAdd.Key + " " + currencyToAdd.Value);
             playerCurrency[currencyToAdd.Key] += currencyToAdd.Value;
         }
 

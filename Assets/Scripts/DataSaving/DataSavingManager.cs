@@ -34,7 +34,6 @@ public class DataSavingManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        print("Scene loaded and updating data saving objects");
         dataSavingObjects = GetDataSavingObjects();
         LoadGameData();
     }
