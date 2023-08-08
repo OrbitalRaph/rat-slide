@@ -33,11 +33,9 @@ public class ObtainedCurrencyDisplay : MonoBehaviour
             if (obtainedCurrency.ContainsKey(currencyType.uniqueName))
             {
                 GameObject currencyItem = Instantiate(CurrencyItemPrefab, itemListParent);
-                PlayerCurrencyItemManager currencyItemManager = currencyItem.GetComponent<PlayerCurrencyItemManager>();
+                ObtainedCurrencyItemManager currencyItemManager = currencyItem.GetComponent<ObtainedCurrencyItemManager>();
                 currencyItemManager.Initialize(currencyType, obtainedCurrency[currencyType.uniqueName]);
             }
         }
-
-        GameManager.Instance.UpdateCurrencyDisplay();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Cette classe gère l'affichage de la monnaie du joueur d'un type spécifié.
 /// </summary>
-public class PlayerCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
+public class ObtainedCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
 {
     
     public Image icon;
@@ -23,27 +23,27 @@ public class PlayerCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
         currencyAmountText.text = currencyAmount.ToString();
     }
 
-    private IEnumerator WaitForCurrencyManager()
+    private IEnumerator WaitForGameManager()
     {
 
         yield return null;
-        CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdateCurrencyDisplay);
+        GameManager.Instance.onCurrencyChanged.AddListener(UpdateCurrencyDisplay);
         UpdateCurrencyDisplay();
     }
 
     private void OnEnable()
     {
-        StartCoroutine(WaitForCurrencyManager());
+        StartCoroutine(WaitForGameManager());
     }
 
     private void OnDisable()
     {
-        CurrencyManager.Instance.onCurrencyChanged.RemoveListener(UpdateCurrencyDisplay);
+        GameManager.Instance.onCurrencyChanged.RemoveListener(UpdateCurrencyDisplay);
     }
 
     public void UpdateCurrencyDisplay()
     {
         if (currencyAmountText != null)
-            currencyAmountText.text = CurrencyManager.Instance.playerCurrency[currencyType.uniqueName].ToString();
+            currencyAmountText.text = GameManager.Instance.obtainedCurrency[currencyType.uniqueName].ToString();
     }
 }

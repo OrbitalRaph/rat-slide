@@ -22,14 +22,14 @@ public class CostItemManager : MonoBehaviour, ICurrencyDisplay
         this.currencyType = currencyType;
         icon.sprite = currencyType.icon;
         this.cost = cost;
-        UpdatePlayerCurrency();
+        UpdateCurrencyDisplay();
     }
 
     private IEnumerator WaitForCurrencyManager()
     {
         yield return null;
-        CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdatePlayerCurrency);
-        UpdatePlayerCurrency();
+        CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdateCurrencyDisplay);
+        UpdateCurrencyDisplay();
     }
 
     private void OnEnable()
@@ -39,13 +39,13 @@ public class CostItemManager : MonoBehaviour, ICurrencyDisplay
 
     private void OnDisable()
     {
-        CurrencyManager.Instance.onCurrencyChanged.RemoveListener(UpdatePlayerCurrency);
+        CurrencyManager.Instance.onCurrencyChanged.RemoveListener(UpdateCurrencyDisplay);
     }
 
     /// <summary>
     /// Cette méthode met à jour l'affichage de la monnaie du joueur.
     /// </summary>
-    public void UpdatePlayerCurrency()
+    public void UpdateCurrencyDisplay()
     {
         if (CurrencyManager.Instance == null)
             return;

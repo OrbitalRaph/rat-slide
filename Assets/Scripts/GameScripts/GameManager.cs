@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 /// <summary>
 /// Ce script s'occupe de gérer le jeu.
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour, IDataSaving
     public SerializableDictionary<string, int> obtainedCurrency;
     public static GameManager Instance;
     public GameObject gameOverPanel;
+    public UnityEvent onCurrencyChanged;
     private bool gameOver = false;
 
     private void Start()
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour, IDataSaving
             Destroy(gameObject);
         }
 
-        DataSavingManager.Instance.LoadGameData();
+        // DataSavingManager.Instance.LoadGameData();
     }
 
     public void LoadGameData(GameData gameData)
@@ -98,9 +100,10 @@ public class GameManager : MonoBehaviour, IDataSaving
     {
         foreach (KeyValuePair<string, int> currencyToAdd in currency)
         {
-            print(currencyToAdd.Key + " " + currencyToAdd.Value);
             playerCurrency[currencyToAdd.Key] += currencyToAdd.Value;
         }
+
+        onCurrencyChanged.Invoke();
     }
 
     /// <summary>
@@ -112,5 +115,5 @@ public class GameManager : MonoBehaviour, IDataSaving
         gameOverPanel.transform.localPosition = new Vector3(0, 1000, 0);
         LeanTween.moveLocalY(gameOverPanel, 0, 0.5f).setEaseOutCubic();
         LeanTween.alphaCanvas(gameOverPanel.GetComponent<CanvasGroup>(), 1, 0.5f).setEaseOutCubic();
-    }
+    } 
 }

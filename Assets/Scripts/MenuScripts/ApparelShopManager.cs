@@ -18,6 +18,11 @@ namespace ApparelShop
         private string equippedApparel;
         private ApparelItemManager equippedItemManager;
 
+        // private void Start()
+        // {
+        //     DataSavingManager.Instance.LoadGameData();
+        // }
+
         /// <summary>
         /// Cette méthode permet d'initialiser le magasin d'habillement.
         /// Les items sont instanciés et les boutons sont configurés.
@@ -70,7 +75,6 @@ namespace ApparelShop
             equippedApparel = gameData.equippedApparels[apparelType];
 
             // Initialise le magasin
-            // wait for currency manager to be not null
             StartCoroutine(WaitForCurrencyManager());
         }
 

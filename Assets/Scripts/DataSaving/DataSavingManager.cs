@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 /// <summary>
@@ -15,20 +16,25 @@ public class DataSavingManager : MonoBehaviour
     private FileDataHandler fileDataHandler;
     public static DataSavingManager Instance { get; private set; }
 
-    private void Awake()
-    {
-    if (Instance != null)
-    {
-        Destroy(gameObject);
-        return;
-    }
-    Instance = this;
-    DontDestroyOnLoad(gameObject);
-}
-
     private void Start()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        DontDestroyOnLoad(gameObject);
         fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        dataSavingObjects = GetDataSavingObjects();
+        LoadGameData();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        print("Scene loaded and updating data saving objects");
         dataSavingObjects = GetDataSavingObjects();
         LoadGameData();
     }

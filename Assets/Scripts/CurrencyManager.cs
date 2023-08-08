@@ -15,21 +15,20 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     public static CurrencyManager Instance { get; private set; }
     public UnityEvent onCurrencyChanged;
 
-    private void Awake()
+    private void Start()
     {
         if (Instance == null)
         {
-            foreach (CurrencyType currencyType in currencyTypes)
-            {
-                playerCurrency.Add(currencyType.uniqueName, 0);
-            }
             Instance = this;
-            UpdateCurrencyDisplay();
         }
         else
         {
             Destroy(gameObject);
         }
+
+        
+        // DataSavingManager.Instance.LoadGameData();
+        UpdateCurrencyDisplay();
     }
 
     public void LoadGameData(GameData gameData)

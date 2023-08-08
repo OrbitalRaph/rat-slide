@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0029499566, g: 0.01298628, b: 0.056063738, a: 1}
+  m_IndirectSpecularColor: {r: 0.008819091, g: 0.043430988, b: 0.148074, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1732,6 +1732,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1984575517}
     m_Modifications:
+    - target: {fileID: 134569163968878540, guid: 6b70c9e6ada483b4191488f05e770884,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2042535983}
+    - target: {fileID: 134569163968878540, guid: 6b70c9e6ada483b4191488f05e770884,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 742975391410025957, guid: 6b70c9e6ada483b4191488f05e770884,
         type: 3}
       propertyPath: m_Name
@@ -1742,6 +1752,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653674127956552205, guid: 6b70c9e6ada483b4191488f05e770884,
+        type: 3}
+      propertyPath: CurrencyItemPrefab
+      value: 
+      objectReference: {fileID: 3094958047665388259, guid: a0915e4a01735a64188bc277ad5779bf,
+        type: 3}
     - target: {fileID: 2502892457020142829, guid: 6b70c9e6ada483b4191488f05e770884,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3190,6 +3206,9 @@ MonoBehaviour:
     - electronics
     values: 00000000000000000000000000000000000000000000000000000000
   gameOverPanel: {fileID: 1143294777}
+  onCurrencyChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2042535984
 Transform:
   m_ObjectHideFlags: 0

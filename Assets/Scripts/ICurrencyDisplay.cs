@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public interface ICurrencyDisplay
 {
-    void UpdatePlayerCurrency();
+    void UpdateCurrencyDisplay();
 }

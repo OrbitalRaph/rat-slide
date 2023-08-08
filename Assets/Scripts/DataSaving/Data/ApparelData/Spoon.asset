@@ -16,6 +16,7 @@ MonoBehaviour:
   itemName: Spoon
   itemCosts:
     keys:
+    - wood
     - metal
-    values: 64000000
-  itemTexture: {fileID: 8400000, guid: 2e91ec15f209b1448ae36c2f2fdff273, type: 2}
+    values: 0a0000000a000000
+  itemTexture: {fileID: 8400000, guid: 6964dc21de521964ca878b15fe66adb4, type: 2}

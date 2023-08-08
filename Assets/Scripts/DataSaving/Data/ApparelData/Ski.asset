@@ -16,6 +16,6 @@ MonoBehaviour:
   itemName: Ski
   itemCosts:
     keys:
-    - wood
+    - plastic
     values: 64000000
-  itemTexture: {fileID: 8400000, guid: 2e91ec15f209b1448ae36c2f2fdff273, type: 2}
+  itemTexture: {fileID: 8400000, guid: 00b196dd591b17d4a80844b2c7875a85, type: 2}
