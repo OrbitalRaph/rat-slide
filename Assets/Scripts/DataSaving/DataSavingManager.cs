@@ -17,12 +17,14 @@ public class DataSavingManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.LogError("Found multiple instances of DataSavingManager");
-        }
-        Instance = this;
+    if (Instance != null)
+    {
+        Destroy(gameObject);
+        return;
     }
+    Instance = this;
+    DontDestroyOnLoad(gameObject);
+}
 
     private void Start()
     {
@@ -34,7 +36,7 @@ public class DataSavingManager : MonoBehaviour
     /// <summary>
     /// Cette méthode s'occupe de récupérer les données du jeu et de l'envoyer aux objets qui en ont besoin.
     /// </summary>
-    private void LoadGameData()
+    public void LoadGameData()
     {
         gameData = fileDataHandler.Load();
 
@@ -55,7 +57,7 @@ public class DataSavingManager : MonoBehaviour
     /// <summary>
     /// Cette méthode s'occupe de sauvegarder les données du jeu et de demander aux objets qui en ont besoin de sauvegarder leurs données.
     /// </summary>
-    private void SaveGameData()
+    public void SaveGameData()
     {
         // Appelle la méthode SaveGameData sur tous les objets de la scène qui implémentent l'interface IDataSaving
         foreach (IDataSaving dataSavingObject in dataSavingObjects)

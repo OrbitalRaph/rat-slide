@@ -37,7 +37,9 @@ namespace ApparelShop
             itemImage.texture = item.itemTexture;
 
             if (!isPurchased)
+            {
                 PopulateCostsList();
+            }
 
             UpdateItemAppearance(isPurchased, isEquipped);
         }

@@ -1,0 +1,58 @@
+Tests fonctionnels pour le projet Rat Glisseur
+
+Section navigation :
+1. Lorsque le joueur appuie sur un bouton onglet non-sélectionné, 
+    le bouton devient sélectionné
+2. Lorsque qu'un bouton non-sélectionné devient sélectionné, 
+    le bouton précédemment sélectionné devient non-sélectionné.
+3. Lorsque le joueur appuie sur un bouton onglet non-sélectionné, 
+    le contenu de l'onglet devient visible.
+4. Lorsque le joueur appuie sur un bouton onglet non-sélectionné,
+    le contenu des autres onglets devient invisible.
+5. Lorsque le joueur appuie sur un bouton onglet déjà sélectionné,
+    le bouton se désélectionne.
+6. Lorsque le joueur appuie sur un bouton onglet déjà sélectionné,
+    le contenu de l'onglet devient invisible.
+
+Section magasin :
+1. Lorsque le joueur achète un objet et qu'il a assez de pièces,
+    le nombre de pièces diminue du prix de l'objet.
+2. Lorsque le joueur achète un objet et qu'il a assez de pièces, 
+    l'objet peut être équiper.
+3. Lorsque le joueur équipe un objet, l'objet est visible sur le rat.
+4. Lorsque le joueur déséquipe un objet, l'objet n'est plus visible sur le rat.
+5. Lorsque le joueur achète un objet et qu'il n'a pas assez de pièces,
+    le nombre de pièces ne diminue pas.
+6. Lorsque le joueur achète un objet et qu'il n'a pas assez de pièces,
+    l'objet ne peut pas être équiper.
+7. Lorsque la monnaie du joueur est changée, l'affichage de la monnaie est changé.
+8. Lorsque la monnaie du joueur est inférieure au coût correspondant à l'objet,
+    le bouton d'achat de l'objet est grisé.
+9. Lorsque la monnaies du joueur est inférieure au coût correspondant,
+    le coût est affiché en rouge.
+10. Lorsque la monnaie du joueur est supérieure ou égale au coût correspondant à l'objet,
+    le bouton d'achat de l'objet est jaune.
+11. Lorsque la monnaies du joueur est supérieure ou égale au coût correspondant,
+    le coût est affiché en vert.
+
+Section niveau :
+1. Lorsque le joueur appuie sur le bouton "Jouer", le niveau commence.
+2. Lorsque le joueur appuie sur la touche "espace", le rat saute.
+3. Lorsque le joueur appuie sur la touche "espace",
+    le rat ne peut pas sauter à nouveau avant d'avoir touché le sol.
+4. Lorsque le joueur appuie sur la touche "A" et que le rat n'est pas
+    dans la voie de gauche, le rat se déplace vers la gauche.
+5. Lorsque le joueur appuie sur la touche "D" et que le rat n'est pas
+    dans la voie de droite, le rat se déplace vers la droite.
+6. Lorsque le joueur appuie sur la touche "A" et que le rat est
+    dans la voie de gauche, le rat ne se déplace pas.
+7. Lorsque le joueur appuie sur la touche "D" et que le rat est
+    dans la voie de droite, le rat ne se déplace pas.
+8. Lorsque le joueur entre en contact avec un obstacle, le niveau se termine.
+9. Lorsque le joueur entre en contact avec un obstacle, le score est affiché.
+10. Lorsque le joueur entre en contact avec un sac à poubelle, le score augmente.
+11. Lorsque le joueur entre en contact avec un sac à poubelle, le sac à poubelle disparaît.
+
+Section sauvegarde :
+1. Lorsque le joueur quitte le jeu, la progression est sauvegardée.
+2. Lorsque le joueur démarre le jeu, la progression est chargée.

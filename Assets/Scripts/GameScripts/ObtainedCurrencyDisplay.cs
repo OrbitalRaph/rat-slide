@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Cette classe gère l'affichage de tous les monnaies du joueur.
-public class TreasuryManager : MonoBehaviour
+public class ObtainedCurrencyDisplay : MonoBehaviour
 {
     public GameObject CurrencyItemPrefab;
     public Transform itemListParent;
@@ -12,15 +12,12 @@ public class TreasuryManager : MonoBehaviour
     private void Start()
     {
         // wait for currency manager to be not null
-        StartCoroutine(WaitForCurrencyManager());
+        StartCoroutine(WaitForGameManager());
     }
 
-    private IEnumerator WaitForCurrencyManager()
+    private IEnumerator WaitForGameManager()
     {
-        while (CurrencyManager.Instance == null)
-        {
-            yield return null;
-        }
+        yield return null;
         PopulateTreasury();
     }
 
@@ -29,18 +26,18 @@ public class TreasuryManager : MonoBehaviour
     /// </summary>
     private void PopulateTreasury()
     {
-        List<CurrencyType> currencyTypes = CurrencyManager.Instance.currencyTypes;
-        SerializableDictionary<string, int> playerCurrency = CurrencyManager.Instance.playerCurrency;
+        List<CurrencyType> currencyTypes = GameManager.Instance.currencyTypes;
+        SerializableDictionary<string, int> obtainedCurrency = GameManager.Instance.obtainedCurrency;
         foreach (CurrencyType currencyType in currencyTypes)
         {
-            if (playerCurrency.ContainsKey(currencyType.uniqueName))
+            if (obtainedCurrency.ContainsKey(currencyType.uniqueName))
             {
                 GameObject currencyItem = Instantiate(CurrencyItemPrefab, itemListParent);
                 PlayerCurrencyItemManager currencyItemManager = currencyItem.GetComponent<PlayerCurrencyItemManager>();
-                currencyItemManager.Initialize(currencyType, playerCurrency[currencyType.uniqueName]);
+                currencyItemManager.Initialize(currencyType, obtainedCurrency[currencyType.uniqueName]);
             }
         }
 
-        CurrencyManager.Instance.UpdateCurrencyDisplay();
+        GameManager.Instance.UpdateCurrencyDisplay();
     }
 }

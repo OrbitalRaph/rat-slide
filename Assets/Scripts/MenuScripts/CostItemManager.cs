@@ -25,19 +25,16 @@ public class CostItemManager : MonoBehaviour, ICurrencyDisplay
         UpdatePlayerCurrency();
     }
 
-    private void OnEnable()
-    {
-        // S'abonne à l'événement de changement de monnaie
-        CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdatePlayerCurrency);
-
-        // Attend une frame pour s'assurer que le CurrencyManager est instancié
-        StartCoroutine(WaitForCurrencyManager());
-    }
-
     private IEnumerator WaitForCurrencyManager()
     {
         yield return null;
+        CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdatePlayerCurrency);
         UpdatePlayerCurrency();
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(WaitForCurrencyManager());
     }
 
     private void OnDisable()
@@ -50,7 +47,9 @@ public class CostItemManager : MonoBehaviour, ICurrencyDisplay
     /// </summary>
     public void UpdatePlayerCurrency()
     {
-        
+        if (CurrencyManager.Instance == null)
+            return;
+
         if (costText != null)
         costText.text = CurrencyManager.Instance.playerCurrency[currencyType.uniqueName] + "/" + cost;
         if (CurrencyManager.Instance.CanAfford(currencyType.uniqueName, cost))

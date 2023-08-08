@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Cette classe gère les monnaies du joueur.
@@ -16,17 +17,18 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
-            Debug.LogError("Found multiple instances of CurrencyManager");
+            foreach (CurrencyType currencyType in currencyTypes)
+            {
+                playerCurrency.Add(currencyType.uniqueName, 0);
+            }
+            Instance = this;
+            UpdateCurrencyDisplay();
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        playerCurrency = new SerializableDictionary<string, int>();
-        foreach (CurrencyType currencyType in currencyTypes)
+        else
         {
-            playerCurrency.Add(currencyType.uniqueName, 0);
+            Destroy(gameObject);
         }
     }
 
@@ -77,6 +79,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     {
         foreach (KeyValuePair<string, int> currencyToAdd in currency)
         {
+            print(currencyToAdd.Key + " " + currencyToAdd.Value);
             playerCurrency[currencyToAdd.Key] += currencyToAdd.Value;
         }
 
@@ -180,7 +183,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
 
     public void UpdateCurrencyDisplay()
     {
-        onCurrencyChanged.Invoke();
+        onCurrencyChanged?.Invoke();
     }
 
     public void DebugAddCurrency()
@@ -190,5 +193,12 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
             playerCurrency[currencyType.uniqueName] += 100;
         }
         UpdateCurrencyDisplay();
+    }
+
+    public void StartGame()
+    {
+        DataSavingManager.Instance.SaveGameData();
+
+        SceneManager.LoadScene("GameScene");
     }
 }

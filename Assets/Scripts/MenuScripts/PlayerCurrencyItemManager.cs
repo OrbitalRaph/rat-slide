@@ -11,7 +11,6 @@ public class PlayerCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
     
     public Image icon;
     public TMPro.TextMeshProUGUI currencyAmountText;
-
     private CurrencyType currencyType;
 
     /// <summary>
@@ -24,19 +23,17 @@ public class PlayerCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
         currencyAmountText.text = currencyAmount.ToString();
     }
 
-    private void OnEnable()
-    {
-        // S'abonne à l'événement de changement de monnaie
-        CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdatePlayerCurrency);   
-
-        // Attend une frame pour s'assurer que le CurrencyManager est instancié
-        StartCoroutine(WaitForCurrencyManager());
-    }
-
     private IEnumerator WaitForCurrencyManager()
     {
+
         yield return null;
+        CurrencyManager.Instance.onCurrencyChanged.AddListener(UpdatePlayerCurrency);
         UpdatePlayerCurrency();
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(WaitForCurrencyManager());
     }
 
     private void OnDisable()
@@ -46,6 +43,9 @@ public class PlayerCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
 
     public void UpdatePlayerCurrency()
     {
+        if (CurrencyManager.Instance == null)
+            return;
+
         if (currencyAmountText != null)
             currencyAmountText.text = CurrencyManager.Instance.playerCurrency[currencyType.uniqueName].ToString();
     }

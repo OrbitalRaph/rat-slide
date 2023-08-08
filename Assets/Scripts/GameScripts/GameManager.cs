@@ -1,52 +1,45 @@
-using System.Collections;
 using System.Collections.Generic;
-using MenuScripts;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Ce script s'occupe de gérer le jeu.
 /// Il gère la fin de partie et la monnaie du joueur.
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IDataSaving
 {
+    public List<CurrencyType> currencyTypes;
+    public SerializableDictionary<string, int> playerCurrency;
     public SerializableDictionary<string, int> obtainedCurrency;
     public static GameManager Instance;
-    public TabGroup tabGroup;
     public GameObject gameOverPanel;
-    public UnityEvent onCurrencyObtained;
-    private List<CurrencyType> currencyTypes;
-    private bool gameOver = true;
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    private bool gameOver = false;
 
     private void Start()
     {
-        currencyTypes = CurrencyManager.Instance.currencyTypes;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        DataSavingManager.Instance.LoadGameData();
     }
 
-    public void StartGame()
-    {
-        // hide menu and change scene
-        tabGroup.HideTabGroup();
-        SceneManager.LoadScene("GameScene");
-        obtainedCurrency = new();
-        for (int i = 0; i < currencyTypes.Count; i++)
+    public void LoadGameData(GameData gameData)
+    {   
+        for (int i = 0; i < gameData.playerCurrency.Count; i++)
         {
-            obtainedCurrency.Add(currencyTypes[i].uniqueName, 0);
+            playerCurrency[currencyTypes[i].uniqueName] = gameData.playerCurrency[currencyTypes[i].uniqueName];
         }
-        
-        print("Game Over false");
-        gameOver = false;
+    }
+
+    public void SaveGameData(ref GameData gameData)
+    {
+        gameData.playerCurrency = playerCurrency;
     }
 
     /// <summary>
@@ -58,19 +51,18 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        print("Game Over true");
         gameOver = true;
+
+        AddCurrency(obtainedCurrency);
+        
+        DataSavingManager.Instance.SaveGameData();
+
         ShowGameOverMenu();
-        CurrencyManager.Instance.AddCurrency(obtainedCurrency);
     }
 
     public void BackToMenu()
     {
-        HideGameOverMenu();
-
-        Time.timeScale = 1;
         SceneManager.LoadScene("MenuScene");
-        tabGroup.ShowTabGroup();
     }
 
     /// <summary>
@@ -96,8 +88,19 @@ public class GameManager : MonoBehaviour
                 obtainedCurrency[currencyType.uniqueName] += amount;
             }
         }
+    }
 
-        onCurrencyObtained.Invoke();
+    /// <summary>
+    /// Cette méthode permet d'ajouter de la monnaie au joueur.
+    /// </summary>
+    /// <param name="currency"> Les monnaies à ajouter. </param>
+    public void AddCurrency(SerializableDictionary<string, int> currency)
+    {
+        foreach (KeyValuePair<string, int> currencyToAdd in currency)
+        {
+            print(currencyToAdd.Key + " " + currencyToAdd.Value);
+            playerCurrency[currencyToAdd.Key] += currencyToAdd.Value;
+        }
     }
 
     /// <summary>
@@ -109,14 +112,5 @@ public class GameManager : MonoBehaviour
         gameOverPanel.transform.localPosition = new Vector3(0, 1000, 0);
         LeanTween.moveLocalY(gameOverPanel, 0, 0.5f).setEaseOutCubic();
         LeanTween.alphaCanvas(gameOverPanel.GetComponent<CanvasGroup>(), 1, 0.5f).setEaseOutCubic();
-    }
-
-    /// <summary>
-    /// Cette fonction permet de cacher le panel de fin de partie
-    /// </summary>
-    public void HideGameOverMenu()
-    {
-        LeanTween.moveLocalY(gameOverPanel, 1000, 0.5f).setEaseOutCubic();
-        LeanTween.alphaCanvas(gameOverPanel.GetComponent<CanvasGroup>(), 0, 0.5f).setEaseOutCubic().setOnComplete(() => gameOverPanel.SetActive(false));
     }
 }

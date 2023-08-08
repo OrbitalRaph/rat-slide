@@ -70,6 +70,13 @@ namespace ApparelShop
             equippedApparel = gameData.equippedApparels[apparelType];
 
             // Initialise le magasin
+            // wait for currency manager to be not null
+            StartCoroutine(WaitForCurrencyManager());
+        }
+
+        private IEnumerator WaitForCurrencyManager()
+        {
+            yield return null;
             PopulateShop();
         }
 
