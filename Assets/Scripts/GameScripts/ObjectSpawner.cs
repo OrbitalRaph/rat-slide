@@ -11,6 +11,9 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject coinPrefab;
     public float destroyTime = 2.0f;
 
+    /// <summary>
+    /// Fait apparaître un objet à la position du spawner.
+    /// </summary>
     public void SpawnObject()
     {
         int randomIndex = Random.Range(0, 2);

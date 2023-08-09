@@ -5,7 +5,7 @@ using System;
 using System.IO;
 
 /// <summary>
-/// Cette classe gère le chargement et la sauvegarde des données du jeu.
+/// Gère le chargement et la sauvegarde des données du jeu.
 /// </summary>
 public class FileDataHandler
 {
@@ -19,14 +19,14 @@ public class FileDataHandler
     }
 
     /// <summary>
-    /// Cette méthode permet de charger les données du jeu.
+    /// Charger les données du jeu.
     /// </summary>
     public GameData Load() {
         string fullPath = Path.Combine(directoryPath, filePath);
         GameData loadedData = null;
         if (File.Exists(fullPath)) {
             try {
-                // Read the JSON string from the file
+                // Lit le string JSON du fichier
                 string dataAsJson = "";
                 using (FileStream fs = new FileStream(fullPath, FileMode.Open)) {
                     using (StreamReader reader = new StreamReader(fs)) {
@@ -34,11 +34,11 @@ public class FileDataHandler
                     }
                 }
 
-                // Deserialize the JSON string to a GameData object
+                // Désérialise le string JSON en objet GameData
                 loadedData = JsonUtility.FromJson<GameData>(dataAsJson);
 
             } catch (Exception e) {
-                Debug.LogError("Error loading data from " + fullPath + ": " + e.Message);
+                Debug.LogError("Erreur à charger les données de " + fullPath + ": " + e.Message);
             }
         }
         return loadedData;
@@ -50,13 +50,13 @@ public class FileDataHandler
     public void Save(GameData gameData) {
         string fullPath = Path.Combine(directoryPath, filePath);
         try {
-            // Create the directory if it doesn't exist
+            // Crée le dossier s'il n'existe pas
             Directory.CreateDirectory(directoryPath);
 
-            // Serialize the GameData object to JSON
+            // Sérialise l'objet GameData en string JSON
             string jsonData = JsonUtility.ToJson(gameData, true);
 
-            // Write the JSON string to the file
+            // Écrit le string JSON dans le fichier
             using (FileStream fs = new FileStream(fullPath, FileMode.Create)) {
                 using (StreamWriter writer = new StreamWriter(fs)) {
                     writer.Write(jsonData);
@@ -65,7 +65,7 @@ public class FileDataHandler
 
 
         } catch (Exception e) {
-            Debug.LogError("Error saving data to " + fullPath + ": " + e.Message);
+            Debug.LogError("Erreur à sauvegarder les données dans " + fullPath + ": " + e.Message);
         }
     }
 

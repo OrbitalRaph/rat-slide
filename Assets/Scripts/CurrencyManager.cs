@@ -15,8 +15,11 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     public static CurrencyManager Instance { get; private set; }
     public UnityEvent onCurrencyChanged;
 
+    /// La fonction Start est appelée une fois au démarrage du jeu.
     private void Start()
     {
+
+        // S'assure qu'il n'y a qu'une seule instance de CurrencyManager
         if (Instance == null)
         {
             Instance = this;
@@ -26,26 +29,30 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
             Destroy(gameObject);
         }
 
-        
-        // DataSavingManager.Instance.LoadGameData();
         UpdateCurrencyDisplay();
     }
 
+    /// <summary>
+    /// Récupère les données de jeu nécessaires au CurrencyManager.
+    /// </summary>
     public void LoadGameData(GameData gameData)
     {
         SetCurrency(gameData.playerCurrency);
     }
 
+    /// <summary>
+    /// Sauvegarde les données de jeu modifiables par le CurrencyManager.
+    /// </summary>
     public void SaveGameData(ref GameData gameData)
     {
         gameData.playerCurrency = playerCurrency;
     }
 
     /// <summary>
-    /// Cette méthode permet d'obtenir un CurrencyType à partir de son nom unique.
+    /// Obtiens un CurrencyType à partir de son nom unique.
     /// </summary>
     /// <param name="currencyName"> Le nom unique de la monnaie. </param>
-    /// <returns></returns>
+    /// <returns> Le CurrencyType correspondant </returns>
     public CurrencyType GetCurrencyType(string currencyName)
     {
         foreach (CurrencyType currencyType in currencyTypes)
@@ -59,7 +66,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet d'ajouter de la monnaie au joueur.
+    /// Ajoute de la monnaie au joueur.
     /// </summary>
     /// <param name="currencyName"> Le nom unique de la monnaie. </param>
     /// <param name="amount"> Le montant à ajouter. </param>
@@ -71,7 +78,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet d'ajouter de la monnaie au joueur.
+    /// Ajoute de la monnaie au joueur.
     /// </summary>
     /// <param name="currency"> Les monnaies à ajouter. </param>
     public void AddCurrency(SerializableDictionary<string, int> currency)
@@ -85,7 +92,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet de retirer de la monnaie au joueur.
+    /// Retire de la monnaie au joueur.
     /// </summary>   
     /// <param name="currencyName"> Le nom unique de la monnaie. </param>
     /// <param name="amount"> Le montant à ajouter. </param>
@@ -97,7 +104,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet de retirer de la monnaie au joueur.
+    /// Retire de la monnaie au joueur.
     /// </summary>
     /// <param name="itemCosts"> Les coûts de l'item. </param>
     public void DeductCurrency(SerializableDictionary<string, int> itemCosts)
@@ -111,17 +118,17 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet d'obtenir la quantité d'une monnaie.
+    /// Obtiens la quantité d'une monnaie.
     /// </summary>
     /// <param name="currencyName"> Le nom unique de la monnaie. </param>
-    /// <returns></returns>
+    /// <returns> La quantité de la monnaie </returns>
     public int GetCurrency(string currencyName)
     {
         return playerCurrency[currencyName];
     }
 
     /// <summary>
-    /// Cette méthode permet de définir la quantité d'une monnaie.
+    /// Définie la quantité d'une monnaie.
     /// </summary>
     /// <param name="currencyName"> Le nom unique de la monnaie. </param>
     /// <param name="amount"> Le montant à définir. </param>
@@ -133,7 +140,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet de définir la quantité de toutes les monnaies.
+    /// Définie la quantité de toutes les monnaies.
     /// </summary>
     /// <param name="currency"> Les monnaies à définir. </param>
     private void SetCurrency(SerializableDictionary<string, int> currency)
@@ -146,7 +153,7 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet d'obtenir toutes les monnaies.
+    /// Obtiens toutes les monnaies du joueur.
     /// </summary>
     public SerializableDictionary<string, int> GetCurrency()
     {
@@ -154,19 +161,21 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
     }
 
     /// <summary>
-    /// Cette méthode permet de vérifier si le joueur peut se permettre d'acheter un item.
+    /// Vérifie si le joueur peut se permettre d'acheter un item.
     /// </summary>
     /// <param name="currencyName"> Le nom unique de la monnaie. </param>
     /// <param name="amount"> Le montant à vérifier. </param>
+    /// <returns> Si le joueur peut se permettre d'acheter l'item </returns>
     public bool CanAfford(string currencyName, int amount)
     {
         return playerCurrency[currencyName] >= amount;
     }
 
     /// <summary>
-    /// Cette méthode permet de vérifier si le joueur peut se permettre d'acheter un item.
+    /// Vérifie si le joueur peut se permettre d'acheter un item.
     /// </summary>
     /// <param name="itemCosts"> Les coûts de l'item. </param>
+    /// <returns> Si le joueur peut se permettre d'acheter l'item </returns>
     public bool CanAfford(SerializableDictionary<string, int> itemCosts)
     {
         foreach (KeyValuePair<string, int> itemCost in itemCosts)
@@ -184,6 +193,9 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         onCurrencyChanged?.Invoke();
     }
 
+    /// <summary>
+    /// Ajoute 100 de chaque monnaie pour le debug.
+    /// </summary>
     public void DebugAddCurrency()
     {
         foreach (CurrencyType currencyType in currencyTypes)
@@ -193,6 +205,9 @@ public class CurrencyManager : MonoBehaviour, IDataSaving
         UpdateCurrencyDisplay();
     }
 
+    /// <summary>
+    /// Démarre le jeu.
+    /// </summary>
     public void StartGame()
     {
         DataSavingManager.Instance.SaveGameData();

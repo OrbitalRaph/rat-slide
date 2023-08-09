@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Ce script fait apparaître des sacs à intervalles réguliers.
 /// Les sacs sont des objets qui peuvent être ramassés par le joueur.
 /// Ils augmentent les monnaies du joueur de façon aléatoire.
 /// </summary>

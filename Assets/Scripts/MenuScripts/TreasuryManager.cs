@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Cette classe gère l'affichage de tous les monnaies du joueur.
+/// Gère l'affichage de tous les monnaies du joueur.
+/// </summary>
 public class TreasuryManager : MonoBehaviour
 {
     public GameObject CurrencyItemPrefab;
@@ -11,26 +12,27 @@ public class TreasuryManager : MonoBehaviour
 
     private void Start()
     {
-        // wait for currency manager to be not null
         StartCoroutine(WaitForCurrencyManager());
     }
 
+    /// <summary>
+    /// coroutine qui permet d'attendre que le CurrencyManager soit initialisé.
+    /// </summary>
     private IEnumerator WaitForCurrencyManager()
     {
-        while (CurrencyManager.Instance == null)
-        {
-            yield return null;
-        }
+        yield return null;
         PopulateTreasury();
     }
 
     /// <summary>
-    /// Cette méthode permet de populer la liste des monnaies du joueur.
+    /// Popule la liste des monnaies du joueur.
     /// </summary>
     private void PopulateTreasury()
     {
         List<CurrencyType> currencyTypes = CurrencyManager.Instance.currencyTypes;
         SerializableDictionary<string, int> playerCurrency = CurrencyManager.Instance.playerCurrency;
+
+        // Pour chaque type de monnaie, on crée un item dans la liste des monnaies du joueur.
         foreach (CurrencyType currencyType in currencyTypes)
         {
             if (playerCurrency.ContainsKey(currencyType.uniqueName))

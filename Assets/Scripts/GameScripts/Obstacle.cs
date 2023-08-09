@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Les obstacles terminent la partie du joueur s'ils les touchent.
+/// </summary>
 public class Obstacle : MonoBehaviour
 {
     public float speed = 5f;

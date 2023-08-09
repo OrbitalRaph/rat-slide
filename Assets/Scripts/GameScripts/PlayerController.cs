@@ -45,6 +45,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Déplace le joueur d'une voie à une autre.
+    /// </summary>
+    /// <param name="direction"> -1 pour aller à gauche, 1 pour aller à droite.</param>
     private void MoveLane(int direction)
     {
         Vector3 targetPosition = transform.position + Vector3.right * direction * laneDistance;
@@ -67,6 +71,9 @@ public class PlayerController : MonoBehaviour
                  });
     }
 
+    /// <summary>
+    /// Fait sauter le joueur.
+    /// </summary>
     private void Jump()
     {
         if (transform.position.y == originalPosition.y)

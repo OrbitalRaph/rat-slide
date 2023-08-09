@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Ce script fait apparaître des objets à intervalles réguliers.
+/// Fait apparaître des objets à intervalles réguliers.
 /// À chaque intervalle, un spawner est choisi au hasard et un objet est créé.
 /// </summary>
 public class SpawnersManager : MonoBehaviour
@@ -16,6 +16,9 @@ public class SpawnersManager : MonoBehaviour
         StartCoroutine(SpawnObjects());
     }
 
+    /// <summary>
+    /// À chaque intervalle, un spawner est choisi au hasard et un objet est créé.
+    /// </summary>
     private IEnumerator SpawnObjects()
     {
         while (true)

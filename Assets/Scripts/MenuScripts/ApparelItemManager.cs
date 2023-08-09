@@ -7,7 +7,7 @@ using TMPro;
 namespace ApparelShop
 {
     /// <summary>
-    /// Cette classe gère un item du magasin d'habillement.
+    /// Gère un item du magasin d'habillement.
     /// </summary>
     public class ApparelItemManager : MonoBehaviour
     {
@@ -28,8 +28,8 @@ namespace ApparelShop
         private readonly List<GameObject> costsObjects = new();
 
         /// <summary>
-        /// Cette méthode est appelée lorsque le magasin d'habillement instancie un item manager.
-        /// Elle permet d'initialiser l'item manager.
+        /// Initialise l'item manager.
+        /// Appelé lorsque le magasin d'habillement instancie un item manager.
         /// </summary>
         public void Initialize(ApparelItem item, bool isPurchased, bool isEquipped)
         {
@@ -45,8 +45,8 @@ namespace ApparelShop
         }
 
         /// <summary>
-        /// Cette méthode est appelée à l'initialisation de l'item manager.
-        /// Elle permet d'instancier les éléments UI pour les coûts de l'item.
+        /// Instancie les éléments UI pour les coûts de l'item.
+        /// Appelé à l'initialisation de l'item manager.
         /// </summary>
         private void PopulateCostsList()
         {
@@ -62,7 +62,7 @@ namespace ApparelShop
         }
 
         /// <summary>
-        /// Cette méthode met à jour l'apparence de l'item.
+        /// Met à jour l'apparence de l'item.
         /// </summary>
         public void UpdateItemAppearance(bool isPurchased, bool isEquipped)
         {

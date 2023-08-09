@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Cette classe permet de créer un dictionnaire sérialisable.
+/// Dictionnaire sérialisable.
+/// Permet de sauvegarder un dictionnaire dans un fichier.
+/// Permet de modifier les valeurs du dictionnaire dans l'inspecteur.
 /// </summary>
 [System.Serializable]
 public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver, IEnumerable<KeyValuePair<TKey, TValue>>

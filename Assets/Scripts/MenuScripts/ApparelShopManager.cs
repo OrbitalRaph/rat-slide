@@ -18,13 +18,8 @@ namespace ApparelShop
         private string equippedApparel;
         private ApparelItemManager equippedItemManager;
 
-        // private void Start()
-        // {
-        //     DataSavingManager.Instance.LoadGameData();
-        // }
-
         /// <summary>
-        /// Cette méthode permet d'initialiser le magasin d'habillement.
+        /// Initialiser le magasin d'habillement.
         /// Les items sont instanciés et les boutons sont configurés.
         /// </summary>
         private void PopulateShop()
@@ -55,8 +50,8 @@ namespace ApparelShop
         }
 
         /// <summary>
-        /// Cette méthode permet de charger les données du jeu.
-        /// Elle est appelée par le GameDataManager au démarrage du jeu.
+        /// Charge les données du jeu nécessaires au magasin d'habillement.
+        /// appelé par le GameDataManager au démarrage du jeu.
         /// Les items déverrouillés et équipés sont chargés.
         /// </summary>
         /// <param name="gameData"> Les données du jeu. </param>
@@ -78,6 +73,8 @@ namespace ApparelShop
             StartCoroutine(WaitForCurrencyManager());
         }
 
+        /// <summary>
+        /// Coroutine qui attend que le CurrencyManager soit initialisé.
         private IEnumerator WaitForCurrencyManager()
         {
             yield return null;
@@ -85,7 +82,7 @@ namespace ApparelShop
         }
 
         /// <summary>
-        /// Cette méthode permet de sauvegarder les données du jeu.
+        /// Sauvegarde les données du jeu.
         /// Elle est appelée par le GameDataManager à la fermeture du jeu.
         /// Les items déverrouillés et équipés sont sauvegardés.
         /// </summary>
@@ -101,13 +98,12 @@ namespace ApparelShop
                 }
                 gameData.unlockedApparels.Add(item.Key, item.Value);
             }
- 
             // Ajoute l'item équipé
             gameData.equippedApparels[apparelType] = equippedApparel;
         }
 
         /// <summary>
-        /// Cette méthode est appelée lorsque le joueur clique sur un bouton d'action.
+        /// Appelé lorsque le joueur clique sur un bouton d'action.
         /// Si l'item est déverrouillé, il est équipé, sinon il est acheté.
         /// </summary>
         private void OnButtonClick(ApparelItem item, ApparelItemManager itemManager)
@@ -125,7 +121,7 @@ namespace ApparelShop
         }
 
         /// <summary>
-        /// Cette méthode est appelée lorsque le joueur clique sur le bouton d'achat.
+        /// Appelé lorsque le joueur clique sur le bouton d'achat.
         /// Si le joueur a assez d'argent, l'item est déverrouillé et acheté.
         /// </summary>
         /// <param name="item"> L'item à acheter. </param>
@@ -173,17 +169,25 @@ namespace ApparelShop
             itemManager.UpdateItemAppearance(true, true);
         }
 
-
+        /// <summary>
+        /// Retourne vrai si l'item est achetable.
+        /// </summary>
         private bool IsItemAffordable(ApparelItem item)
         {
             return CurrencyManager.Instance.CanAfford(item.itemCosts);
         }
 
+        /// <summary>
+        /// Retourne vrai si l'item est déverrouillé.
+        /// </summary>
         private bool IsItemPurchased(ApparelItem item)
         {
             return unlockedApparels[item.uniqueName];
         }
 
+        /// <summary>
+        /// Retourne vrai si l'item est équipé.
+        /// </summary>
         private bool IsItemEquipped(ApparelItem item)
         {
             return equippedApparel == item.uniqueName;

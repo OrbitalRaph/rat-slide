@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Cette classe gère l'affichage de tous les monnaies du joueur.
+/// Cette classe gère l'affichage de tous les monnaies récupérées par le joueur.
+/// </summary>
 public class ObtainedCurrencyDisplay : MonoBehaviour
 {
     public GameObject CurrencyItemPrefab;
@@ -11,10 +12,12 @@ public class ObtainedCurrencyDisplay : MonoBehaviour
 
     private void Start()
     {
-        // wait for currency manager to be not null
         StartCoroutine(WaitForGameManager());
     }
 
+    /// <summary>
+    /// Coroutine qui permet d'attendre que le GameManager soit initialisé.
+    /// </summary>
     private IEnumerator WaitForGameManager()
     {
         yield return null;
@@ -22,7 +25,7 @@ public class ObtainedCurrencyDisplay : MonoBehaviour
     }
 
     /// <summary>
-    /// Cette méthode permet de populer la liste des monnaies du joueur.
+    /// Popule la liste des monnaies du joueur.
     /// </summary>
     private void PopulateTreasury()
     {

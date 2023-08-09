@@ -5,11 +5,11 @@ using UnityEngine;
 namespace MenuScripts
 {
     /// <summary>
-    /// Cette classe permet de gérer les différents panels du menu
-    /// Elle permet de changer de panel en fonction de l'index
-    /// Elle enclenche les animations de transition entre les panels
-    /// Elle permet de savoir si une transition est en cours
-    /// Elle permet de savoir quel panel est actif
+    /// Gère les différents panels du menu
+    /// change de panel en fonction de l'index
+    /// enclenche les animations de transition entre les panels
+    /// Permet de savoir si une transition est en cours
+    /// Permet de savoir quel panel est actif
     /// </summary>
 public class PanelGroup : MonoBehaviour
     {
@@ -24,8 +24,8 @@ public class PanelGroup : MonoBehaviour
         }
 
         /// <summary>
-        ///  Cette fonction permet de changer de panel
-        ///  Elle est appelée par les boutons du menu
+        /// Change de panel
+        /// appelé par les boutons du menu
         /// </summary>
         /// <param name="index"> L'index du panel à afficher </param>
         public void SetPageIndex(int index)
@@ -36,9 +36,9 @@ public class PanelGroup : MonoBehaviour
         }
 
         /// <summary>
-        /// Cette Coroutine permet de changer de panel
-        /// Elle est appelée par SetPageIndex
-        /// Elle permet de lancer les animations de transition entre les panels
+        /// Coroutine qui permet de changer de panel
+        /// appelé par SetPageIndex
+        /// lance les animations de transition entre les panels
         /// </summary>
         private IEnumerator ChangeMenuPanel()
         {

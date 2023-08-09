@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008819091, g: 0.043430988, b: 0.148074, a: 1}
+  m_IndirectSpecularColor: {r: 0.0029499566, g: 0.01298628, b: 0.056063738, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -918,6 +918,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b83f28c2e108bc4196d7e0f5c273525, type: 3}
+--- !u!1 &453370943 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3b83f28c2e108bc4196d7e0f5c273525,
+    type: 3}
+  m_PrefabInstance: {fileID: 453370942}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &510361125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0aa4a9427a7b8b149935b5d5e2f6a201,
@@ -3148,6 +3154,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0aa4a9427a7b8b149935b5d5e2f6a201, type: 3}
+--- !u!1 &1990864015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0aa4a9427a7b8b149935b5d5e2f6a201,
+    type: 3}
+  m_PrefabInstance: {fileID: 1990864014}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2042535982
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,6 +3217,24 @@ MonoBehaviour:
     - plastic
     - electronics
     values: 00000000000000000000000000000000000000000000000000000000
+  ratModel: {fileID: 453370943}
+  BoardModel: {fileID: 1990864015}
+  outfitPrefabs:
+    keys:
+    - yo
+    - madame
+    - elegant
+    values:
+    - {fileID: 919132149155446097, guid: 8c27db998f6ad5e44baf464f3ede14b8, type: 3}
+    - {fileID: 919132149155446097, guid: 7d75f91b0f63770438c29dc07e3a0358, type: 3}
+    - {fileID: 919132149155446097, guid: 66836b6f2db0d1541bb5f7778bff9ea6, type: 3}
+  boardPrefabs:
+    keys:
+    - spoon
+    - ski
+    values:
+    - {fileID: 919132149155446097, guid: c312443918175a94eb2d33d6c0a75fc4, type: 3}
+    - {fileID: 919132149155446097, guid: b7469d28dcd0754469c10ccf3f4432f2, type: 3}
   gameOverPanel: {fileID: 1143294777}
   onCurrencyChanged:
     m_PersistentCalls:

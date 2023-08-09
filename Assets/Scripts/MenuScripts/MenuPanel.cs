@@ -6,8 +6,8 @@ namespace MenuScripts
 {
 
     /// <summary>
-    /// Cette classe permet de gérer un onglet du menu
-    /// Elle permet d'afficher ou de cacher le panel associé à l'onglet
+    /// Gère un onglet du menu
+    /// Affiche ou de cache le panel associé à l'onglet
     /// </summary>
     [RequireComponent(typeof(CanvasGroup))]
     public class MenuPanel : MonoBehaviour
@@ -15,7 +15,7 @@ namespace MenuScripts
         public bool fromRight = false;
 
         /// <summary>
-        /// Cette fonction permet d'afficher le panel
+        /// Affiche le panel
         /// </summary>
         public void ShowMenu()
         {
@@ -32,7 +32,7 @@ namespace MenuScripts
         }
 
         /// <summary>
-        /// Cette fonction permet de cacher le panel
+        /// Cache le panel
         /// </summary>
         public void HideMenu()
         {

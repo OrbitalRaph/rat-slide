@@ -4,17 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Cette classe gère l'affichage de la monnaie du joueur d'un type spécifié.
+/// Gère l'affichage de la monnaie du joueur d'un type spécifié.
 /// </summary>
 public class PlayerCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
-{
-    
+{   
     public Image icon;
     public TMPro.TextMeshProUGUI currencyAmountText;
     private CurrencyType currencyType;
 
     /// <summary>
-    /// Cette méthode permet d'initialiser le cost manager.
+    /// Initialise le cost manager.
     /// </summary>
     public void Initialize(CurrencyType currencyType, int currencyAmount)
     {
@@ -23,6 +22,9 @@ public class PlayerCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
         currencyAmountText.text = currencyAmount.ToString();
     }
 
+    /// <summary>
+    /// coroutine qui permet d'attendre que le CurrencyManager soit initialisé.
+    /// </summary>
     private IEnumerator WaitForCurrencyManager()
     {
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Cette classe gère l'affichage de la monnaie du joueur d'un type spécifié.
+/// Gère l'affichage de la monnaie du joueur d'un type spécifié.
 /// </summary>
 public class ObtainedCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
 {
@@ -14,7 +14,7 @@ public class ObtainedCurrencyItemManager : MonoBehaviour, ICurrencyDisplay
     private CurrencyType currencyType;
 
     /// <summary>
-    /// Cette méthode permet d'initialiser le cost manager.
+    /// Initialise le cost manager.
     /// </summary>
     public void Initialize(CurrencyType currencyType, int currencyAmount)
     {
